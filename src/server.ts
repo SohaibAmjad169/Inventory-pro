@@ -60,6 +60,8 @@ app.use(cors({
         'http://localhost:3000', 
         'http://localhost:5173',
         'https://ums.plivix-tech.com',
+        "https://mondomty.com",
+        "https://www.mondomty.com",
         process.env.CORS_ORIGIN!
       ],
   credentials: true,

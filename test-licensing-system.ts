@@ -6,7 +6,7 @@
 import crypto from 'crypto';
 import { default as fetch } from 'node-fetch';
 
-const API_URL = 'http://localhost:4000/api/v1';
+const API_URL = 'https://mondomty.com/api/v1';
 const colors = {
   reset: '\x1b[0m',
   red: '\x1b[31m',
