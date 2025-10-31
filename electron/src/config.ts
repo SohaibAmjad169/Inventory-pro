@@ -12,7 +12,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 export const config = {
   // Backend API
   backend: {
-  url: process.env.BACKEND_URL || 'https://mondomty.com',
+  url: 'http://localhost:4000',
     healthEndpoint: process.env.BACKEND_HEALTH_ENDPOINT || '/health',
     timeout: 10000, // 10 seconds
   },
