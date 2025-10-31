@@ -245,7 +245,7 @@ const BrandingManagementPage: React.FC = () => {
             >
               {branding.logo_header ? (
                 <img
-                  src={`http://localhost:4000${branding.logo_header}`}
+                  src={`http://localhost:4000${branding.logo_header} || ${process.env.VITE_API_BASE_URL}/${branding.logo_header}`}
                   alt={branding.company_name}
                   className="max-h-16 object-contain"
                 />
@@ -460,7 +460,7 @@ const BrandingManagementPage: React.FC = () => {
                 </h3>
                 <LogoUpload
                   onLogoSelect={(file) => setLogoFile(file)}
-                  currentLogo={editingBranding?.logo_header ? `http://localhost:4000${editingBranding.logo_header}` : undefined}
+                  currentLogo={editingBranding?.logo_header ? `http://localhost:4000${editingBranding.logo_header} || ${process.env.VITE_API_BASE_URL}${editingBranding.logo_header}` : undefined}
                 />
               </div>
 
