@@ -4,8 +4,18 @@ import { useAuthStore } from '../store/authStore';
 import { useTranslation } from '../i18n/i18nContext';
 import { Supplier, UserRole } from '../types';
 import { inventoryAPI } from '../api/inventory';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const SuppliersPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Acme Corporation');
+  const placeholder2 = useSmartPlaceholder('John Doe');
+  const placeholder3 = useSmartPlaceholder('contact@supplier.com');
+  const placeholder4 = useSmartPlaceholder('+1 234 567 8900');
+  const placeholder5 = useSmartPlaceholder('TAX-123456');
+  const placeholder6 = useSmartPlaceholder('123 Main St, City, Country');
+
+
   const { user } = useAuthStore();
   const { t } = useTranslation();
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
@@ -95,7 +105,7 @@ export const SuppliersPage = () => {
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold gradient-text mb-2">{t.suppliers.suppliers}</h1>
-            <p className="text-slate-600 text-sm">Manage your vendors and suppliers</p>
+            <p className="text-slate-600 text-sm">{t.suppliers.manageSuppliers}</p>
           </div>
           {canManage && (
             <button onClick={() => handleOpenModal()} className="btn-primary">
@@ -118,7 +128,7 @@ export const SuppliersPage = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="input-field pl-10"
-              placeholder="Search suppliers by name, contact, or email..."
+              placeholder={t.common.searchPlaceholder}
             />
           </div>
         </div>
@@ -128,14 +138,14 @@ export const SuppliersPage = () => {
           {isLoading ? (
             <div className="col-span-full p-12 text-center glass rounded-3xl">
               <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-slate-600">Loading suppliers...</p>
+              <SmartText tag="p" className="mt-4 text-slate-600">Loading suppliers...</SmartText>
             </div>
           ) : suppliers.length === 0 ? (
             <div className="col-span-full p-12 text-center glass rounded-3xl">
-              <p className="text-slate-600 mb-4">No suppliers found</p>
+              <SmartText tag="p" className="text-slate-600 mb-4">No suppliers found</SmartText>
               {canManage && (
                 <button onClick={() => handleOpenModal()} className="btn-primary">
-                  Create First Supplier
+                  <SmartText>Create First Supplier</SmartText>
                 </button>
               )}
             </div>
@@ -220,74 +230,74 @@ export const SuppliersPage = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Supplier Name *</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Supplier Name *</SmartText>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     className="input-field"
-                    placeholder="Acme Corporation"
+                    placeholder={placeholder1}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Contact Person</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Contact Person</SmartText>
                   <input
                     type="text"
                     value={formData.contact_person}
                     onChange={(e) => setFormData({ ...formData, contact_person: e.target.value })}
                     className="input-field"
-                    placeholder="John Doe"
+                    placeholder={placeholder2}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Email</SmartText>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="input-field"
-                    placeholder="contact@supplier.com"
+                    placeholder={placeholder3}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Phone</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Phone</SmartText>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="input-field"
-                    placeholder="+1 234 567 8900"
+                    placeholder={placeholder4}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Tax ID</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Tax ID</SmartText>
                   <input
                     type="text"
                     value={formData.tax_id}
                     onChange={(e) => setFormData({ ...formData, tax_id: e.target.value })}
                     className="input-field"
-                    placeholder="TAX-123456"
+                    placeholder={placeholder5}
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Address</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Address</SmartText>
                   <textarea
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     className="input-field"
                     rows={2}
-                    placeholder="123 Main St, City, Country"
+                    placeholder={placeholder6}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Payment Terms</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Payment Terms</SmartText>
                   <select
                     value={formData.payment_terms}
                     onChange={(e) => setFormData({ ...formData, payment_terms: e.target.value })}

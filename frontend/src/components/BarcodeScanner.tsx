@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { BrowserMultiFormatReader, NotFoundException } from '@zxing/library';
+import { SmartText } from '../i18n/smartTranslation';
 
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
@@ -165,28 +166,24 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
             // Permission denied
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🚫</div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-2">Camera Access Required</h4>
+              <SmartText tag="h4" className="text-xl font-semibold text-gray-800 mb-2">Camera Access Required</SmartText>
               <p className="text-gray-600 mb-6">{error}</p>
               <div className="space-y-2 text-sm text-gray-600 text-left max-w-md mx-auto">
-                <p className="font-semibold">To enable camera:</p>
+                <SmartText tag="p" className="font-semibold">To enable camera:</SmartText>
                 <ol className="list-decimal list-inside space-y-1">
                   <li>Click the camera icon in your browser's address bar</li>
                   <li>Select "Always allow camera access"</li>
                   <li>Refresh the page and try again</li>
                 </ol>
               </div>
-              <button
-                onClick={handleClose}
-                className="mt-6 btn-secondary"
-              >
-                Use Manual Input Instead
-              </button>
+              <button onClick={handleClose}
+                className="mt-6 btn-secondary"><SmartText>Use Manual Input Instead</SmartText></button>
             </div>
           ) : hasPermission === null ? (
             // Loading
             <div className="text-center py-12">
               <div className="inline-block w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
-              <p className="text-gray-600">Requesting camera access...</p>
+              <SmartText tag="p" className="text-gray-600">Requesting camera access...</SmartText>
             </div>
           ) : (
             // Camera view
@@ -230,7 +227,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
                       <div className="inline-block bg-black bg-opacity-75 text-white px-4 py-2 rounded-full">
                         <div className="flex items-center gap-2">
                           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                          <span className="text-sm font-medium">Scanning...</span>
+                          <SmartText tag="span" className="text-sm font-medium">Scanning...</SmartText>
                         </div>
                       </div>
                     </div>
@@ -262,17 +259,13 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
                 )}
 
                 {/* Cancel Button */}
-                <button
-                  onClick={handleClose}
-                  className="btn-secondary flex-1"
-                >
-                  Cancel
-                </button>
+                <button onClick={handleClose}
+                  className="btn-secondary flex-1"><SmartText>Cancel</SmartText></button>
               </div>
 
               {/* Tips */}
               <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-                <p className="font-semibold mb-2">📋 Scanning Tips:</p>
+                <SmartText tag="p" className="font-semibold mb-2">📋 Scanning Tips:</SmartText>
                 <ul className="space-y-1 list-disc list-inside">
                   <li>Hold camera steady and parallel to barcode</li>
                   <li>Ensure good lighting (use flash if needed)</li>

@@ -8,12 +8,18 @@ import { Product, Customer, POSSession, POSTransactionItem, PaymentMethod, POSSe
 import { productsAPI } from '../api/products';
 import { salesAPI } from '../api/sales';
 import { receiptsAPI, ReceiptData } from '../api/receipts';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 interface CartItem extends POSTransactionItem {
   product: Product;
 }
 
 export const POSPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Search by name, SKU, brand, description, or barcode...');
+  const placeholder2 = useSmartPlaceholder('Transaction notes...');
+
+
   const { user } = useAuthStore();
   const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
@@ -447,7 +453,7 @@ export const POSPage = () => {
               <div className="flex items-center gap-4">
                 {currentSession && (
                   <div className="text-right">
-                    <p className="text-sm text-gray-600">Session Sales</p>
+                    <p className="text-sm text-gray-600">{t.pos?.sessionSales || 'Session Sales'}</p>
                     <p className="text-xl font-bold text-green-600">
                       ${Number(currentSession.total_sales).toFixed(2)}
                     </p>
@@ -485,13 +491,13 @@ export const POSPage = () => {
           <div className="w-1/2 p-6 border-r bg-white overflow-y-auto">
             {/* Search and Scanner */}
             <div className="mb-4 space-y-3">
-              <h2 className="text-lg font-semibold text-gray-800">Products</h2>
+              <SmartText tag="h2" className="text-lg font-semibold text-gray-800">Products</SmartText>
               
               {/* Search Bar */}
               <div className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="Search by name, SKU, or barcode..."
+                  placeholder={placeholder1}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearchProducts()}
@@ -567,14 +573,10 @@ export const POSPage = () => {
               {/* Cart Header */}
               <div className="mb-4">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold text-gray-800">Cart</h2>
-                  <button
-                    onClick={clearCart}
+                  <SmartText tag="h2" className="text-lg font-semibold text-gray-800">Cart</SmartText>
+                  <button onClick={clearCart}
                     className="text-sm text-red-600 hover:text-red-800"
-                    disabled={cart.length === 0}
-                  >
-                    Clear Cart
-                  </button>
+                    disabled={cart.length === 0}><SmartText>Clear Cart</SmartText></button>
                 </div>
               </div>
 
@@ -582,8 +584,8 @@ export const POSPage = () => {
               <div className="flex-1 overflow-y-auto mb-4">
                 {cart.length === 0 ? (
                   <div className="text-center text-gray-500 py-8">
-                    <p>Cart is empty</p>
-                    <p className="text-sm">Add products to get started</p>
+                    <SmartText tag="p">Cart is empty</SmartText>
+                    <SmartText tag="p" className="text-sm">Add products to get started</SmartText>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -604,7 +606,7 @@ export const POSPage = () => {
                         
                         <div className="grid grid-cols-3 gap-2 text-sm">
                           <div>
-                            <label className="block text-gray-600 mb-1">Qty</label>
+                            <SmartText tag="label" className="block text-gray-600 mb-1">Qty</SmartText>
                             <input
                               type="number"
                               min="1"
@@ -615,7 +617,7 @@ export const POSPage = () => {
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-600 mb-1">Price</label>
+                            <SmartText tag="label" className="block text-gray-600 mb-1">Price</SmartText>
                             <input
                               type="number"
                               step="0.01"
@@ -626,7 +628,7 @@ export const POSPage = () => {
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-600 mb-1">Discount %</label>
+                            <SmartText tag="label" className="block text-gray-600 mb-1">Discount %</SmartText>
                             <input
                               type="number"
                               min="0"
@@ -651,9 +653,7 @@ export const POSPage = () => {
 
               {/* Customer Selection */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Customer (Optional)
-                </label>
+                <SmartText tag="label" className="block text-sm font-medium text-gray-700 mb-2">Customer (Optional)</SmartText>
                 <select
                   value={selectedCustomer?.id || ''}
                   onChange={(e) => {
@@ -673,9 +673,7 @@ export const POSPage = () => {
 
               {/* Payment Method */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Payment Method
-                </label>
+                <SmartText tag="label" className="block text-sm font-medium text-gray-700 mb-2">Payment Method</SmartText>
                 <select
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
@@ -694,9 +692,7 @@ export const POSPage = () => {
               {/* Amount Tendered */}
               {paymentMethod === PaymentMethod.CASH && (
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Amount Tendered
-                  </label>
+                  <SmartText tag="label" className="block text-sm font-medium text-gray-700 mb-2">Amount Tendered</SmartText>
                   <input
                     type="number"
                     step="0.01"
@@ -711,35 +707,33 @@ export const POSPage = () => {
 
               {/* Notes */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Notes (Optional)
-                </label>
+                <SmartText tag="label" className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</SmartText>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-lg"
                   rows={2}
-                  placeholder="Transaction notes..."
+                  placeholder={placeholder2}
                 />
               </div>
 
               {/* Totals */}
               <div className="bg-white p-4 rounded-lg border mb-4">
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Subtotal:</span>
+                  <SmartText tag="span">Subtotal:</SmartText>
                   <span>${calculateSubtotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Tax:</span>
+                  <SmartText tag="span">Tax:</SmartText>
                   <span>${calculateTax().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
-                  <span>Total:</span>
+                  <SmartText tag="span">Total:</SmartText>
                   <span>${calculateTotal().toFixed(2)}</span>
                 </div>
                 {paymentMethod === PaymentMethod.CASH && amountTendered > 0 && (
                   <div className="flex justify-between text-sm mt-2">
-                    <span>Change:</span>
+                    <SmartText tag="span">Change:</SmartText>
                     <span className="text-green-600 font-bold">
                       ${calculateChange().toFixed(2)}
                     </span>
@@ -763,11 +757,9 @@ export const POSPage = () => {
         {showSessionModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-96">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Start POS Session</h3>
+              <SmartText tag="h3" className="text-lg font-bold text-gray-800 mb-4">Start POS Session</SmartText>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Starting Cash Amount
-                </label>
+                <SmartText tag="label" className="block text-sm font-medium text-gray-700 mb-2">Starting Cash Amount</SmartText>
                 <input
                   type="number"
                   step="0.01"
@@ -801,9 +793,9 @@ export const POSPage = () => {
         {showEndSessionModal && currentSession && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-96">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">End POS Session</h3>
+              <SmartText tag="h3" className="text-lg font-bold text-gray-800 mb-4">End POS Session</SmartText>
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">Session Summary:</p>
+                <SmartText tag="p" className="text-sm text-gray-600 mb-2">Session Summary:</SmartText>
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="text-sm">Starting Cash: ${Number(currentSession.starting_cash).toFixed(2)}</p>
                   <p className="text-sm">Total Sales: ${Number(currentSession.total_sales).toFixed(2)}</p>
@@ -811,9 +803,7 @@ export const POSPage = () => {
                 </div>
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ending Cash Amount
-                </label>
+                <SmartText tag="label" className="block text-sm font-medium text-gray-700 mb-2">Ending Cash Amount</SmartText>
                 <input
                   type="number"
                   step="0.01"

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CashEventType } from '../types';
 import { professionalPOSAPI } from '../api/professional-pos';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 interface CashManagementModalProps {
   sessionId: string;
@@ -15,6 +16,9 @@ export const CashManagementModal: React.FC<CashManagementModalProps> = ({
   onSuccess,
   type,
 }) => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Invoice #, receipt #, etc.');
+
   const [amount, setAmount] = useState<number>(0);
   const [reason, setReason] = useState('');
   const [reference, setReference] = useState('');
@@ -106,9 +110,7 @@ export const CashManagementModal: React.FC<CashManagementModalProps> = ({
           {/* Amount (not for NO_SALE) */}
           {type !== CashEventType.NO_SALE && (
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Amount *
-              </label>
+              <SmartText tag="label" className="block text-sm font-semibold text-gray-700 mb-2">Amount *</SmartText>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-bold">
                   $
@@ -130,9 +132,7 @@ export const CashManagementModal: React.FC<CashManagementModalProps> = ({
 
           {/* Reason */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Reason *
-            </label>
+            <SmartText tag="label" className="block text-sm font-semibold text-gray-700 mb-2">Reason *</SmartText>
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}
@@ -145,15 +145,13 @@ export const CashManagementModal: React.FC<CashManagementModalProps> = ({
 
           {/* Reference (optional) */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Reference (Optional)
-            </label>
+            <SmartText tag="label" className="block text-sm font-semibold text-gray-700 mb-2">Reference (Optional)</SmartText>
             <input
               type="text"
               value={reference}
               onChange={(e) => setReference(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Invoice #, receipt #, etc."
+              placeholder={placeholder1}
             />
           </div>
 
@@ -173,13 +171,9 @@ export const CashManagementModal: React.FC<CashManagementModalProps> = ({
             >
               {isProcessing ? 'Processing...' : 'Record Event'}
             </button>
-            <button
-              type="button"
+            <button type="button"
               onClick={onClose}
-              className="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
-            >
-              Cancel
-            </button>
+              className="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors font-semibold"><SmartText>Cancel</SmartText></button>
           </div>
         </form>
       </div>

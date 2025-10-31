@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SmartText } from '../i18n/smartTranslation';
 import { 
   DollarSign, 
   CreditCard, 
@@ -207,9 +208,9 @@ const BillingAnalytics: React.FC = () => {
     return (
       <div className="text-center py-8">
         <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error Loading Billing Data</h3>
+        <SmartText tag="h3" className="text-lg font-semibold text-gray-900 mb-2">Error Loading Billing Data</SmartText>
         <p className="text-gray-600 mb-4">{error}</p>
-        <Button onClick={fetchBillingData}>Try Again</Button>
+        <Button onClick={fetchBillingData}><SmartText>Try Again</SmartText></Button>
       </div>
     );
   }
@@ -219,8 +220,8 @@ const BillingAnalytics: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Billing & Analytics</h1>
-          <p className="text-gray-600">Manage billing records and analyze revenue</p>
+          <SmartText tag="h1" className="text-3xl font-bold text-gray-900">Billing & Analytics</SmartText>
+          <SmartText tag="p" className="text-gray-600">Manage billing records and analyze revenue</SmartText>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline">
@@ -245,9 +246,7 @@ const BillingAnalytics: React.FC = () => {
             <div className="text-2xl font-bold">
               {formatCurrency(analytics?.totalRevenue || 0)}
             </div>
-            <p className="text-xs text-muted-foreground">
-              All time revenue
-            </p>
+            <SmartText tag="p" className="text-xs text-muted-foreground">All time revenue</SmartText>
           </CardContent>
         </Card>
 
@@ -260,9 +259,7 @@ const BillingAnalytics: React.FC = () => {
             <div className="text-2xl font-bold">
               {formatCurrency(analytics?.pendingRevenue || 0)}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Awaiting payment
-            </p>
+            <SmartText tag="p" className="text-xs text-muted-foreground">Awaiting payment</SmartText>
           </CardContent>
         </Card>
 
@@ -312,8 +309,8 @@ const BillingAnalytics: React.FC = () => {
               {billingRecords.length === 0 ? (
                 <div className="text-center py-8">
                   <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Billing Records</h3>
-                  <p className="text-gray-600">Create your first billing record to get started.</p>
+                  <SmartText tag="h3" className="text-lg font-semibold text-gray-900 mb-2">No Billing Records</SmartText>
+                  <SmartText tag="p" className="text-gray-600">Create your first billing record to get started.</SmartText>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -374,8 +371,8 @@ const BillingAnalytics: React.FC = () => {
               {paymentRecords.length === 0 ? (
                 <div className="text-center py-8">
                   <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Payment Records</h3>
-                  <p className="text-gray-600">No payments have been processed yet.</p>
+                  <SmartText tag="h3" className="text-lg font-semibold text-gray-900 mb-2">No Payment Records</SmartText>
+                  <SmartText tag="p" className="text-gray-600">No payments have been processed yet.</SmartText>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -425,8 +422,8 @@ const BillingAnalytics: React.FC = () => {
               {creditPurchases.length === 0 ? (
                 <div className="text-center py-8">
                   <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Credit Purchases</h3>
-                  <p className="text-gray-600">No credit purchases have been made yet.</p>
+                  <SmartText tag="h3" className="text-lg font-semibold text-gray-900 mb-2">No Credit Purchases</SmartText>
+                  <SmartText tag="p" className="text-gray-600">No credit purchases have been made yet.</SmartText>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -481,7 +478,7 @@ const BillingAnalytics: React.FC = () => {
                 {/* Payment Methods Breakdown */}
                 {analytics?.paidByMethod && analytics.paidByMethod.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">Revenue by Payment Method</h3>
+                    <SmartText tag="h3" className="text-lg font-semibold mb-4">Revenue by Payment Method</SmartText>
                     <div className="space-y-2">
                       {analytics.paidByMethod.map((method) => (
                         <div key={method.payment_method} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
@@ -496,7 +493,7 @@ const BillingAnalytics: React.FC = () => {
                 {/* Monthly Revenue Trends */}
                 {analytics?.monthlyRevenue && Object.keys(analytics.monthlyRevenue).length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">Monthly Revenue Trends</h3>
+                    <SmartText tag="h3" className="text-lg font-semibold mb-4">Monthly Revenue Trends</SmartText>
                     <div className="space-y-2">
                       {Object.entries(analytics.monthlyRevenue)
                         .sort(([a], [b]) => b.localeCompare(a))
@@ -516,21 +513,21 @@ const BillingAnalytics: React.FC = () => {
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <BarChart3 className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                     <div className="text-2xl font-bold text-blue-600">{billingRecords.length}</div>
-                    <div className="text-sm text-blue-600">Total Billing Records</div>
+                    <SmartText tag="div" className="text-sm text-blue-600">Total Billing Records</SmartText>
                   </div>
                   <div className="text-center p-4 bg-green-50 rounded-lg">
                     <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
                     <div className="text-2xl font-bold text-green-600">
                       {billingRecords.filter(r => r.status === 'PAID').length}
                     </div>
-                    <div className="text-sm text-green-600">Paid Records</div>
+                    <SmartText tag="div" className="text-sm text-green-600">Paid Records</SmartText>
                   </div>
                   <div className="text-center p-4 bg-yellow-50 rounded-lg">
                     <Clock className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
                     <div className="text-2xl font-bold text-yellow-600">
                       {billingRecords.filter(r => r.status === 'PENDING').length}
                     </div>
-                    <div className="text-sm text-yellow-600">Pending Records</div>
+                    <SmartText tag="div" className="text-sm text-yellow-600">Pending Records</SmartText>
                   </div>
                 </div>
               </div>

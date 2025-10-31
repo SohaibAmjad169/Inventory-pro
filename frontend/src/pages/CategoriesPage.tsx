@@ -4,8 +4,14 @@ import { useAuthStore } from '../store/authStore';
 import { useTranslation } from '../i18n/i18nContext';
 import { Category, UserRole } from '../types';
 import { inventoryAPI } from '../api/inventory';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const CategoriesPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('e.g., Electronics');
+  const placeholder2 = useSmartPlaceholder('Optional description...');
+
+
   const { user } = useAuthStore();
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -94,7 +100,7 @@ export const CategoriesPage = () => {
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold gradient-text mb-2">{t.categories.categories}</h1>
-            <p className="text-slate-600 text-sm">Organize your products into categories</p>
+            <p className="text-slate-600 text-sm">{t.categories.organizeProducts}</p>
           </div>
           {canManage && (
             <button onClick={() => handleOpenModal()} className="btn-primary">
@@ -111,11 +117,11 @@ export const CategoriesPage = () => {
           {isLoading ? (
             <div className="p-12 text-center">
               <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-slate-600">Loading categories...</p>
+              <p className="mt-4 text-slate-600">{t.messages.loading}</p>
             </div>
           ) : categories.length === 0 ? (
             <div className="p-12 text-center">
-              <p className="text-slate-600 mb-4">No categories found</p>
+              <p className="text-slate-600 mb-4">{t.categories.noCategoriesFound}</p>
               {canManage && (
                 <button onClick={() => handleOpenModal()} className="btn-primary">
                   Create First Category
@@ -127,11 +133,11 @@ export const CategoriesPage = () => {
               <thead className="bg-gradient-to-r from-primary-50 to-primary-100">
                 <tr>
                   <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">Name</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">Description</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">Parent</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">Products</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">Status</th>
-                  {canManage && <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">Actions</th>}
+                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">{t.common.description}</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">{t.categories.parentCategory}</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">{t.products.products}</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">{t.common.status}</th>
+                  {canManage && <th className="px-6 py-4 text-left text-sm font-bold text-slate-700">{t.common.actions}</th>}
                 </tr>
               </thead>
               <tbody>
@@ -189,30 +195,30 @@ export const CategoriesPage = () => {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Name *</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Name *</SmartText>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   className="input-field"
-                  placeholder="e.g., Electronics"
+                  placeholder={placeholder1}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Description</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Description</SmartText>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="input-field"
                   rows={3}
-                  placeholder="Optional description..."
+                  placeholder={placeholder2}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Parent Category</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Parent Category</SmartText>
                 <select
                   value={formData.parent_id}
                   onChange={(e) => setFormData({ ...formData, parent_id: e.target.value })}

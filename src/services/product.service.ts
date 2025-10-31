@@ -220,12 +220,13 @@ export class ProductService {
 
     const where: Prisma.ProductWhereInput = {};
 
-    // Search query
+    // Search query - Smart search across name, SKU, brand, and description
     if (params.q) {
       where.OR = [
         { name: { contains: params.q, mode: 'insensitive' } },
         { sku: { contains: params.q, mode: 'insensitive' } },
         { brand: { contains: params.q, mode: 'insensitive' } },
+        { description: { contains: params.q, mode: 'insensitive' } },
       ];
     }
 
@@ -238,11 +239,8 @@ export class ProductService {
       where.brand = params.brand;
     }
 
-    // Only filter by archived status if explicitly requested
-    // Default behavior: show only non-archived products
     where.is_archived = params.isArchived !== undefined ? params.isArchived : false;
 
-    // Only filter by active status if explicitly requested
     if (params.isActive !== undefined) {
       where.is_active = params.isActive;
     }

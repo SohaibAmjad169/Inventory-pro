@@ -47,6 +47,24 @@ export interface Translations {
     warning: string;
     info: string;
     inventoryPro: string;
+    // Common UI phrases
+    noDataFound: string;
+    createFirst: string;
+    manage: string;
+    searchPlaceholder: string;
+    filterBy: string;
+    showAll: string;
+    sortBy: string;
+    ascending: string;
+    descending: string;
+    itemsPerPage: string;
+    showing: string;
+    of: string;
+    entries: string;
+    previousPage: string;
+    nextPage: string;
+    firstPage: string;
+    lastPage: string;
   };
 
   // Navigation
@@ -121,6 +139,18 @@ export interface Translations {
     today: string;
     systemToday: string;
     userManagement: string;
+    productCatalog: string;
+    activeProducts: string;
+    archivedProducts: string;
+    topCategories: string;
+    topBrands: string;
+    recentlyAddedProducts: string;
+    viewAll: string;
+    browseCatalog: string;
+    quickAccessProducts: string;
+    browseProductCatalog: string;
+    searchProducts: string;
+    displayName: string;
   };
 
   // Receipt
@@ -228,36 +258,99 @@ export interface Translations {
     archive: string;
     browseProducts: string;
     manageInventory: string;
+    noProductsFound: string;
+    createFirstProduct: string;
   };
 
   // Categories
-  categories: {
-    categories: string;
-    category: string;
-    addCategory: string;
-    editCategory: string;
-    deleteCategory: string;
-    parentCategory: string;
-    subcategories: string;
-    productCount: string;
-    sortOrder: string;
+    categories: {
+      categories: string;
+      category: string;
+      addCategory: string;
+      editCategory: string;
+      deleteCategory: string;
+      parentCategory: string;
+      subcategories: string;
+      productCount: string;
+      sortOrder: string;
+      noCategoriesFound: string;
+      createFirstCategory: string;
+      organizeProducts: string;
+    };
+    suppliers: {
+      suppliers: string;
+      supplier: string;
+      addSupplier: string;
+      editSupplier: string;
+      deleteSupplier: string;
+      companyName: string;
+      contactPerson: string;
+      email: string;
+      phone: string;
+      address: string;
+      website: string;
+      taxId: string;
+      paymentTerms: string;
+      supplierCode: string;
+      notes: string;
+      status: string;
+      active: string;
+      inactive: string;
+      noSuppliersFound: string;
+      createFirstSupplier: string;
+      manageSuppliers: string;
+    };
+  
+  // Stock Adjustments
+  stockAdjustments: {
+    stockAdjustments: string;
+    stockAdjustment: string;
+    addStockAdjustment: string;
+    editStockAdjustment: string;
+    deleteStockAdjustment: string;
+    adjustmentType: string;
+    increase: string;
+    decrease: string;
+    reason: string;
+    quantity: string;
+    adjustmentDate: string;
+    reference: string;
+    notes: string;
+    noAdjustmentsFound: string;
+    createFirstAdjustment: string;
+    trackStockChanges: string;
   };
 
-  // Suppliers
-  suppliers: {
-    suppliers: string;
-    supplier: string;
-    addSupplier: string;
-    editSupplier: string;
-    supplierDetails: string;
-    contactPerson: string;
-    phone: string;
-    address: string;
-    taxId: string;
-    paymentTerms: string;
+  // Error Messages & Status
+  messages: {
+    loading: string;
+    loadingUsers: string;
+    loadingProducts: string;
+    loadingCustomers: string;
+    noDataFound: string;
+    noUsersFound: string;
+    noProductsFound: string;
+    noCustomersFound: string;
+    failedToLoad: string;
+    failedToLoadUsers: string;
+    failedToDelete: string;
+    failedToUpdate: string;
+    successfullyCreated: string;
+    successfullyUpdated: string;
+    successfullyDeleted: string;
+    confirmDelete: string;
+    confirmAction: string;
+    permissionDenied: string;
+    unauthorized: string;
+    invalidCredentials: string;
+    sessionExpired: string;
+    networkError: string;
+    serverError: string;
+    validationError: string;
+    saveChanges: string;
+    discardChanges: string;
+    unsavedChanges: string;
   };
-
-  // Customers
   customers: {
     customers: string;
     customer: string;
@@ -319,21 +412,26 @@ export interface Translations {
   purchaseOrders: {
     purchaseOrders: string;
     purchaseOrder: string;
-    createPO: string;
-    poNumber: string;
-    supplier: string;
-    status: string;
+    addPurchaseOrder: string;
+    editPurchaseOrder: string;
+    deletePurchaseOrder: string;
+    orderNumber: string;
+    orderDate: string;
+    expectedDelivery: string;
     totalAmount: string;
-    expectedDate: string;
+    orderStatus: string;
+    supplier: string;
     items: string;
     unitPrice: string;
     lineTotal: string;
     draft: string;
-    submitted: string;
+    pending: string;
     approved: string;
     received: string;
     cancelled: string;
-    approvePO: string;
+    noPurchaseOrdersFound: string;
+    createFirstOrder: string;
+    managePurchaseOrders: string;
   };
 
   // Goods Receipt
@@ -447,10 +545,16 @@ export interface Translations {
     newProduct: string;
     scanCompleted: string;
     productsFound: string;
+    howItWorks: string;
+    step1: string;
+    step2: string;
+    step3: string;
+    step4: string;
   };
 
   // POS
   pos: {
+    sessionSales: string;
     pos: string;
     pointOfSale: string;
     session: string;
@@ -501,6 +605,22 @@ export interface Translations {
     createdBy: string;
     createdAt: string;
     updatedAt: string;
+    userManagement: string;
+    manageSystemUsers: string;
+    searchUsers: string;
+    noUsersFound: string;
+    createFirstUser: string;
+    deleteUser: string;
+    roleFilter: string;
+    statusFilter: string;
+    allRoles: string;
+    allStatuses: string;
+    never: string;
+    activate: string;
+    deactivate: string;
+    createUser: string;
+    searchPlaceholder: string;
+    overview: string;
   };
 
   // Audit
@@ -822,6 +942,24 @@ export const translations: Record<Language, Translations> = {
       warning: 'Warning',
       info: 'Info',
       inventoryPro: 'Inventory Pro',
+      // Common UI phrases
+      noDataFound: 'No data found',
+      createFirst: 'Create First',
+      manage: 'Manage',
+      searchPlaceholder: 'Search by name, SKU, brand, or description...',
+      filterBy: 'Filter by',
+      showAll: 'Show All',
+      sortBy: 'Sort by',
+      ascending: 'Ascending',
+      descending: 'Descending',
+      itemsPerPage: 'Items per page',
+      showing: 'Showing',
+      of: 'of',
+      entries: 'entries',
+      previousPage: 'Previous',
+      nextPage: 'Next',
+      firstPage: 'First',
+      lastPage: 'Last',
     },
 
     nav: {
@@ -893,6 +1031,18 @@ export const translations: Record<Language, Translations> = {
       today: 'Today',
       systemToday: 'Here\'s what\'s happening with your system today.',
       userManagement: 'User Management',
+      productCatalog: 'Product Catalog',
+      activeProducts: 'Active Products',
+      archivedProducts: 'Archived Products',
+      topCategories: 'Top Categories',
+      topBrands: 'Top Brands',
+      recentlyAddedProducts: 'Recently Added Products',
+      viewAll: 'View All',
+      browseCatalog: 'Browse Catalog',
+      quickAccessProducts: 'Quick Access Products',
+      browseProductCatalog: 'Browse Product Catalog',
+      searchProducts: 'Search products',
+      displayName: 'Display Name',
     },
 
     receipt: {
@@ -995,6 +1145,8 @@ export const translations: Record<Language, Translations> = {
       archive: 'Archive',
       browseProducts: 'Browse and manage products',
       manageInventory: 'Manage your product inventory',
+      noProductsFound: 'No products found',
+      createFirstProduct: 'Create First Product',
     },
 
     categories: {
@@ -1007,22 +1159,85 @@ export const translations: Record<Language, Translations> = {
       subcategories: 'Subcategories',
       productCount: 'Product Count',
       sortOrder: 'Sort Order',
+      noCategoriesFound: 'No categories found',
+      createFirstCategory: 'Create First Category',
+      organizeProducts: 'Organize your products into categories',
     },
 
-    suppliers: {
-      suppliers: 'Suppliers',
-      supplier: 'Supplier',
-      addSupplier: 'Add Supplier',
-      editSupplier: 'Edit Supplier',
-      supplierDetails: 'Supplier Details',
-      contactPerson: 'Contact Person',
-      phone: 'Phone',
-      address: 'Address',
-      taxId: 'Tax ID',
-      paymentTerms: 'Payment Terms',
-    },
+  suppliers: {
+    suppliers: 'Suppliers',
+    supplier: 'Supplier',
+    addSupplier: 'Add Supplier',
+    editSupplier: 'Edit Supplier',
+    deleteSupplier: 'Delete Supplier',
+    companyName: 'Company Name',
+    contactPerson: 'Contact Person',
+    email: 'Email',
+    phone: 'Phone',
+    address: 'Address',
+    website: 'Website',
+    taxId: 'Tax ID',
+    paymentTerms: 'Payment Terms',
+    supplierCode: 'Supplier Code',
+    notes: 'Notes',
+    status: 'Status',
+    active: 'Active',
+    inactive: 'Inactive',
+    noSuppliersFound: 'No suppliers found',
+    createFirstSupplier: 'Create your first supplier',
+    manageSuppliers: 'Manage your suppliers',
+  },
 
-    customers: {
+  messages: {
+    loading: 'Loading...',
+    loadingUsers: 'Loading users...',
+    loadingProducts: 'Loading products...',
+    loadingCustomers: 'Loading customers...',
+    noDataFound: 'No data found',
+    noUsersFound: 'No users found',
+    noProductsFound: 'No products found',
+    noCustomersFound: 'No customers found',
+    failedToLoad: 'Failed to load data',
+    failedToLoadUsers: 'Failed to load users',
+    failedToDelete: 'Failed to delete',
+    failedToUpdate: 'Failed to update',
+    successfullyCreated: 'Successfully created',
+    successfullyUpdated: 'Successfully updated',
+    successfullyDeleted: 'Successfully deleted',
+    confirmDelete: 'Are you sure you want to delete this item?',
+    confirmAction: 'Are you sure you want to perform this action?',
+    permissionDenied: 'You do not have permission to perform this action',
+    unauthorized: 'Unauthorized access',
+    invalidCredentials: 'Invalid credentials',
+    sessionExpired: 'Session expired',
+    networkError: 'Network error',
+    serverError: 'Server error',
+    validationError: 'Validation error',
+    saveChanges: 'Save changes?',
+    discardChanges: 'Discard changes?',
+    unsavedChanges: 'You have unsaved changes',
+  },
+
+  stockAdjustments: {
+    stockAdjustments: 'Stock Adjustments',
+    stockAdjustment: 'Stock Adjustment',
+    addStockAdjustment: 'Add Stock Adjustment',
+    editStockAdjustment: 'Edit Stock Adjustment',
+    deleteStockAdjustment: 'Delete Stock Adjustment',
+    adjustmentType: 'Adjustment Type',
+    increase: 'Increase',
+    decrease: 'Decrease',
+    reason: 'Reason',
+    quantity: 'Quantity',
+    adjustmentDate: 'Adjustment Date',
+    reference: 'Reference',
+    notes: 'Notes',
+    noAdjustmentsFound: 'No adjustments found',
+    createFirstAdjustment: 'Create your first adjustment',
+    trackStockChanges: 'Track stock changes',
+  },
+
+  customers: {
       customers: 'Customers',
       customer: 'Customer',
       addCustomer: 'Add Customer',
@@ -1078,27 +1293,30 @@ export const translations: Record<Language, Translations> = {
       auditTrail: 'Complete audit trail of all stock changes',
     },
 
-    purchaseOrders: {
-      purchaseOrders: 'Purchase Orders',
-      purchaseOrder: 'Purchase Order',
-      createPO: 'Create Purchase Order',
-      poNumber: 'PO Number',
-      supplier: 'Supplier',
-      status: 'Status',
-      totalAmount: 'Total Amount',
-      expectedDate: 'Expected Date',
-      items: 'Items',
-      unitPrice: 'Unit Price',
-      lineTotal: 'Line Total',
-      draft: 'Draft',
-      submitted: 'Submitted',
-      approved: 'Approved',
-      received: 'Received',
-      cancelled: 'Cancelled',
-      approvePO: 'Approve PO',
-    },
-
-    goodsReceipt: {
+  purchaseOrders: {
+    purchaseOrders: 'Purchase Orders',
+    purchaseOrder: 'Purchase Order',
+    addPurchaseOrder: 'Add Purchase Order',
+    editPurchaseOrder: 'Edit Purchase Order',
+    deletePurchaseOrder: 'Delete Purchase Order',
+    orderNumber: 'Order Number',
+    orderDate: 'Order Date',
+    expectedDelivery: 'Expected Delivery',
+    totalAmount: 'Total Amount',
+    orderStatus: 'Order Status',
+    supplier: 'Supplier',
+    items: 'Items',
+    unitPrice: 'Unit Price',
+    lineTotal: 'Line Total',
+    draft: 'Draft',
+    pending: 'Pending',
+    approved: 'Approved',
+    received: 'Received',
+    cancelled: 'Cancelled',
+    noPurchaseOrdersFound: 'No purchase orders found',
+    createFirstOrder: 'Create your first order',
+    managePurchaseOrders: 'Manage purchase orders',
+  },    goodsReceipt: {
       goodsReceipt: 'Goods Receipt',
       createGRN: 'Create GRN',
       grnNumber: 'GRN Number',
@@ -1204,9 +1422,15 @@ export const translations: Record<Language, Translations> = {
       newProduct: 'New Product',
       scanCompleted: 'Scan Completed',
       productsFound: 'Products Found',
+      howItWorks: 'How it works',
+      step1: 'Upload your receipt, invoice, or price list (JPG, PNG, or PDF)',
+      step2: 'Our OCR engine extracts product names, SKUs, prices, and quantities',
+      step3: 'Review and correct the extracted data',
+      step4: 'Bulk add products to your inventory with one click',
     },
 
     pos: {
+      sessionSales: 'Session Sales',
       pos: 'POS',
       pointOfSale: 'Point of Sale',
       session: 'Session',
@@ -1256,6 +1480,22 @@ export const translations: Record<Language, Translations> = {
       createdBy: 'Created By',
       createdAt: 'Created At',
       updatedAt: 'Updated At',
+      userManagement: 'User Management',
+      manageSystemUsers: 'Manage system users and permissions',
+      searchUsers: 'Search Users',
+      noUsersFound: 'No users found',
+      createFirstUser: 'Create First User',
+      deleteUser: 'Delete User',
+      roleFilter: 'Role Filter',
+      statusFilter: 'Status Filter',
+      allRoles: 'All Roles',
+      allStatuses: 'All Statuses',
+      never: 'Never',
+      activate: 'Activate',
+      deactivate: 'Deactivate',
+      createUser: 'Create User',
+      searchPlaceholder: 'Search by username, email, or name...',
+      overview: 'Overview',
     },
 
     audit: {
@@ -1567,6 +1807,24 @@ export const translations: Record<Language, Translations> = {
       warning: 'تحذير',
       info: 'معلومات',
       inventoryPro: 'برو المخزون',
+      // Common UI phrases
+      noDataFound: 'لا توجد بيانات',
+      createFirst: 'إنشاء الأول',
+      manage: 'إدارة',
+      searchPlaceholder: 'البحث بالاسم أو رمز المنتج أو العلامة التجارية أو الوصف...',
+      filterBy: 'تصفية حسب',
+      showAll: 'إظهار الكل',
+      sortBy: 'ترتيب حسب',
+      ascending: 'تصاعدي',
+      descending: 'تنازلي',
+      itemsPerPage: 'عناصر في الصفحة',
+      showing: 'عرض',
+      of: 'من',
+      entries: 'مدخلات',
+      previousPage: 'السابق',
+      nextPage: 'التالي',
+      firstPage: 'الأول',
+      lastPage: 'الأخير',
     },
 
     nav: {
@@ -1638,6 +1896,18 @@ export const translations: Record<Language, Translations> = {
       today: 'اليوم',
       systemToday: 'إليك ما يحدث في نظامك اليوم.',
       userManagement: 'إدارة المستخدمين',
+      productCatalog: 'كتالوج المنتجات',
+      activeProducts: 'المنتجات النشطة',
+      archivedProducts: 'المنتجات المؤرشفة',
+      topCategories: 'أهم الفئات',
+      topBrands: 'أهم العلامات التجارية',
+      recentlyAddedProducts: 'المنتجات المضافة حديثاً',
+      viewAll: 'عرض الكل',
+      browseCatalog: 'تصفح الكتالوج',
+      quickAccessProducts: 'منتجات الوصول السريع',
+      browseProductCatalog: 'تصفح كتالوج المنتجات',
+      searchProducts: 'البحث في المنتجات',
+      displayName: 'الاسم المعروض',
     },
 
     receipt: {
@@ -1740,6 +2010,8 @@ export const translations: Record<Language, Translations> = {
       archive: 'أرشفة',
       browseProducts: 'تصفح وإدارة المنتجات',
       manageInventory: 'إدارة مخزون المنتجات',
+      noProductsFound: 'لا توجد منتجات',
+      createFirstProduct: 'إنشاء أول منتج',
     },
 
     categories: {
@@ -1752,6 +2024,9 @@ export const translations: Record<Language, Translations> = {
       subcategories: 'الفئات الفرعية',
       productCount: 'عدد المنتجات',
       sortOrder: 'ترتيب الفرز',
+      noCategoriesFound: 'لا توجد فئات',
+      createFirstCategory: 'إنشاء أول فئة',
+      organizeProducts: 'تنظيم المنتجات في فئات',
     },
 
     suppliers: {
@@ -1759,12 +2034,72 @@ export const translations: Record<Language, Translations> = {
       supplier: 'مورد',
       addSupplier: 'إضافة مورد',
       editSupplier: 'تعديل المورد',
-      supplierDetails: 'تفاصيل المورد',
+      deleteSupplier: 'حذف المورد',
+      companyName: 'اسم الشركة',
       contactPerson: 'الشخص المسؤول',
+      email: 'البريد الإلكتروني',
       phone: 'الهاتف',
       address: 'العنوان',
+      website: 'الموقع الإلكتروني',
       taxId: 'الرقم الضريبي',
       paymentTerms: 'شروط الدفع',
+      supplierCode: 'رمز المورد',
+      notes: 'ملاحظات',
+      status: 'الحالة',
+      active: 'نشط',
+      inactive: 'غير نشط',
+      noSuppliersFound: 'لا يوجد موردين',
+      createFirstSupplier: 'إنشاء أول مورد',
+      manageSuppliers: 'إدارة الموردين',
+    },
+
+    messages: {
+      loading: 'جاري التحميل...',
+      loadingUsers: 'جاري تحميل المستخدمين...',
+      loadingProducts: 'جاري تحميل المنتجات...',
+      loadingCustomers: 'جاري تحميل العملاء...',
+      noDataFound: 'لا توجد بيانات',
+      noUsersFound: 'لا يوجد مستخدمين',
+      noProductsFound: 'لا توجد منتجات',
+      noCustomersFound: 'لا يوجد عملاء',
+      failedToLoad: 'فشل في تحميل البيانات',
+      failedToLoadUsers: 'فشل في تحميل المستخدمين',
+      failedToDelete: 'فشل في الحذف',
+      failedToUpdate: 'فشل في التحديث',
+      successfullyCreated: 'تم الإنشاء بنجاح',
+      successfullyUpdated: 'تم التحديث بنجاح',
+      successfullyDeleted: 'تم الحذف بنجاح',
+      confirmDelete: 'هل أنت متأكد من حذف هذا العنصر؟',
+      confirmAction: 'هل أنت متأكد من تنفيذ هذا الإجراء؟',
+      permissionDenied: 'ليس لديك صلاحية لتنفيذ هذا الإجراء',
+      unauthorized: 'وصول غير مخول',
+      invalidCredentials: 'بيانات اعتماد غير صحيحة',
+      sessionExpired: 'انتهت صلاحية الجلسة',
+      networkError: 'خطأ في الشبكة',
+      serverError: 'خطأ في الخادم',
+      validationError: 'خطأ في التحقق',
+      saveChanges: 'حفظ التغييرات؟',
+      discardChanges: 'تجاهل التغييرات؟',
+      unsavedChanges: 'لديك تغييرات غير محفوظة',
+    },
+
+    stockAdjustments: {
+      stockAdjustments: 'تعديلات المخزون',
+      stockAdjustment: 'تعديل مخزون',
+      addStockAdjustment: 'إضافة تعديل مخزون',
+      editStockAdjustment: 'تعديل تعديل المخزون',
+      deleteStockAdjustment: 'حذف تعديل المخزون',
+      adjustmentType: 'نوع التعديل',
+      increase: 'زيادة',
+      decrease: 'نقصان',
+      reason: 'السبب',
+      quantity: 'الكمية',
+      adjustmentDate: 'تاريخ التعديل',
+      reference: 'المرجع',
+      notes: 'ملاحظات',
+      noAdjustmentsFound: 'لا توجد تعديلات',
+      createFirstAdjustment: 'إنشاء أول تعديل',
+      trackStockChanges: 'تتبع تغييرات المخزون',
     },
 
     customers: {
@@ -1826,21 +2161,26 @@ export const translations: Record<Language, Translations> = {
     purchaseOrders: {
       purchaseOrders: 'أوامر الشراء',
       purchaseOrder: 'أمر شراء',
-      createPO: 'إنشاء أمر شراء',
-      poNumber: 'رقم أمر الشراء',
-      supplier: 'المورد',
-      status: 'الحالة',
+      addPurchaseOrder: 'إضافة أمر شراء',
+      editPurchaseOrder: 'تعديل أمر الشراء',
+      deletePurchaseOrder: 'حذف أمر الشراء',
+      orderNumber: 'رقم الأمر',
+      orderDate: 'تاريخ الأمر',
+      expectedDelivery: 'التسليم المتوقع',
       totalAmount: 'المبلغ الإجمالي',
-      expectedDate: 'تاريخ الاستلام المتوقع',
-      items: 'الأصناف',
+      orderStatus: 'حالة الأمر',
+      supplier: 'المورد',
+      items: 'العناصر',
       unitPrice: 'سعر الوحدة',
       lineTotal: 'إجمالي السطر',
       draft: 'مسودة',
-      submitted: 'مقدم',
-      approved: 'موافق عليه',
+      pending: 'في الانتظار',
+      approved: 'معتمد',
       received: 'مستلم',
-      cancelled: 'ملغي',
-      approvePO: 'الموافقة على أمر الشراء',
+      cancelled: 'ملغى',
+      noPurchaseOrdersFound: 'لا توجد أوامر شراء',
+      createFirstOrder: 'إنشاء أول أمر',
+      managePurchaseOrders: 'إدارة أوامر الشراء',
     },
 
     goodsReceipt: {
@@ -1949,9 +2289,15 @@ export const translations: Record<Language, Translations> = {
       newProduct: 'منتج جديد',
       scanCompleted: 'اكتمل المسح',
       productsFound: 'المنتجات الموجودة',
+      howItWorks: 'كيف يعمل',
+      step1: 'قم بتحميل الإيصال أو الفاتورة أو قائمة الأسعار (JPG، PNG، أو PDF)',
+      step2: 'يستخرج محرك OCR أسماء المنتجات والرموز والأسعار والكميات',
+      step3: 'راجع وصحح البيانات المستخرجة',
+      step4: 'أضف المنتجات بكميات كبيرة إلى مخزونك بنقرة واحدة',
     },
 
     pos: {
+      sessionSales: 'مبيعات الجلسة',
       pos: 'نقطة البيع',
       pointOfSale: 'نقطة البيع',
       session: 'الجلسة',
@@ -2001,6 +2347,22 @@ export const translations: Record<Language, Translations> = {
       createdBy: 'تم الإنشاء بواسطة',
       createdAt: 'تاريخ الإنشاء',
       updatedAt: 'تاريخ التحديث',
+      userManagement: 'إدارة المستخدمين',
+      manageSystemUsers: 'إدارة مستخدمي النظام والصلاحيات',
+      searchUsers: 'البحث في المستخدمين',
+      noUsersFound: 'لا يوجد مستخدمين',
+      createFirstUser: 'إنشاء أول مستخدم',
+      deleteUser: 'حذف المستخدم',
+      roleFilter: 'تصفية الأدوار',
+      statusFilter: 'تصفية الحالة',
+      allRoles: 'جميع الأدوار',
+      allStatuses: 'جميع الحالات',
+      never: 'أبداً',
+      activate: 'تفعيل',
+      deactivate: 'إلغاء التفعيل',
+      createUser: 'إنشاء مستخدم',
+      searchPlaceholder: 'البحث باسم المستخدم أو البريد الإلكتروني أو الاسم...',
+      overview: 'نظرة عامة',
     },
 
     audit: {

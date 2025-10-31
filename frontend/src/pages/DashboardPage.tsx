@@ -8,6 +8,7 @@ import { productsAPI } from '../api/products';
 import { LowStockAlert } from '../components/LowStockAlert';
 import apiClient from '../api/client';
 import { useTranslation } from '../i18n/i18nContext';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const DashboardPage = () => {
   const { user, permissions } = useAuthStore();
@@ -112,7 +113,7 @@ export const DashboardPage = () => {
                     </div>
                   </div>
                   <div className="text-3xl font-bold text-green-600 mb-1">{stats.activeUsers}</div>
-                  <div className="text-sm text-slate-600 font-medium">Active Users</div>
+                  <SmartText tag="div" className="text-sm text-slate-600 font-medium">Active Users</SmartText>
                 </div>
 
                 <div className="stat-card animate-slide-up group" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
@@ -124,7 +125,7 @@ export const DashboardPage = () => {
                     </div>
                   </div>
                   <div className="text-3xl font-bold text-red-600 mb-1">{stats.totalUsers - stats.activeUsers}</div>
-                  <div className="text-sm text-slate-600 font-medium">Inactive Users</div>
+                  <SmartText tag="div" className="text-sm text-slate-600 font-medium">Inactive Users</SmartText>
                 </div>
               </div>
             </>
@@ -137,7 +138,7 @@ export const DashboardPage = () => {
                 <svg className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
-                Product Catalog
+                {t.dashboard.productCatalog}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="stat-card animate-slide-up group" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
@@ -149,7 +150,7 @@ export const DashboardPage = () => {
                     </div>
                   </div>
                   <div className="text-3xl font-bold text-slate-800 mb-1">{productStats.totalProducts}</div>
-                  <div className="text-sm text-slate-600 font-medium">Total Products</div>
+                  <div className="text-sm text-slate-600 font-medium">{t.dashboard.totalProducts}</div>
                 </div>
 
                 <div className="stat-card animate-slide-up group" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>
@@ -161,7 +162,7 @@ export const DashboardPage = () => {
                     </div>
                   </div>
                   <div className="text-3xl font-bold text-green-600 mb-1">{productStats.activeProducts}</div>
-                  <div className="text-sm text-slate-600 font-medium">Active Products</div>
+                  <div className="text-sm text-slate-600 font-medium">{t.dashboard.activeProducts}</div>
                 </div>
 
                 <div className="stat-card animate-slide-up group" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
@@ -173,7 +174,7 @@ export const DashboardPage = () => {
                     </div>
                   </div>
                   <div className="text-3xl font-bold text-orange-600 mb-1">{productStats.archivedProducts}</div>
-                  <div className="text-sm text-slate-600 font-medium">Archived Products</div>
+                  <div className="text-sm text-slate-600 font-medium">{t.dashboard.archivedProducts}</div>
                 </div>
               </div>
             </>
@@ -187,7 +188,7 @@ export const DashboardPage = () => {
                   <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                   </svg>
-                  Top Categories
+                  {t.dashboard.topCategories}
                 </h3>
                 <div className="space-y-3">
                   {productStats.productsByCategory.slice(0,5).map((cat) => (
@@ -204,7 +205,7 @@ export const DashboardPage = () => {
                   <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
-                  Top Brands
+                  {t.dashboard.topBrands}
                 </h3>
                 <div className="space-y-3">
                   {productStats.productsByBrand.slice(0,5).map((brand) => (
@@ -222,9 +223,9 @@ export const DashboardPage = () => {
           {productStats && productStats.recentProducts.length > 0 && (
             <div className="glass rounded-3xl p-8 shadow-xl animate-slide-up" style={{ animationDelay: '0.9s', animationFillMode: 'both' }}>
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">Recently Added Products</h2>
+                <h2 className="text-2xl font-bold text-slate-800">{t.dashboard.recentlyAddedProducts}</h2>
                 <Link to="/products" className="text-primary-600 hover:text-primary-700 font-semibold text-sm flex items-center gap-1">
-                  View All
+                  {t.dashboard.viewAll}
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -261,7 +262,7 @@ export const DashboardPage = () => {
 
           {user?.role === UserRole.OWNER_ULTIMATE_SUPER_ADMIN && auditLogs.length > 0 && (
             <div className="glass rounded-3xl p-8 shadow-xl animate-slide-up" style={{ animationDelay: '1.0s', animationFillMode: 'both' }}>
-              <h2 className="text-2xl font-bold text-slate-800 mb-6">Recent Activity</h2>
+              <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Recent Activity</SmartText>
               <div className="overflow-x-auto custom-scrollbar">
                 <table className="w-full">
                   <thead>
@@ -306,10 +307,8 @@ export const DashboardPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
-            <h1 className="text-4xl font-bold gradient-text mb-4">
-              Inventory Manager Dashboard
-            </h1>
-            <p className="text-slate-600 mb-8">Manage and track product catalog</p>
+            <SmartText tag="h1" className="text-4xl font-bold gradient-text mb-4">Inventory Manager Dashboard</SmartText>
+            <SmartText tag="p" className="text-slate-600 mb-8">Manage and track product catalog</SmartText>
           </div>
 
           {/* Low Stock Alerts - Priority for Inventory Manager */}
@@ -329,7 +328,7 @@ export const DashboardPage = () => {
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-slate-800 mb-1">{productStats.totalProducts}</div>
-                <div className="text-sm text-slate-600 font-medium">Total Products</div>
+                <SmartText tag="div" className="text-sm text-slate-600 font-medium">Total Products</SmartText>
               </div>
 
               <div className="stat-card group">
@@ -341,7 +340,7 @@ export const DashboardPage = () => {
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-green-600 mb-1">{productStats.activeProducts}</div>
-                <div className="text-sm text-slate-600 font-medium">Active</div>
+                <SmartText tag="div" className="text-sm text-slate-600 font-medium">Active</SmartText>
               </div>
 
               <div className="stat-card group">
@@ -353,14 +352,14 @@ export const DashboardPage = () => {
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-slate-600 mb-1">{productStats.archivedProducts}</div>
-                <div className="text-sm text-slate-600 font-medium">Archived</div>
+                <SmartText tag="div" className="text-sm text-slate-600 font-medium">Archived</SmartText>
               </div>
             </div>
           )}
 
           {/* Quick Actions */}
           <div className="glass rounded-3xl p-8 shadow-xl">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Quick Actions</h3>
+            <SmartText tag="h3" className="text-xl font-bold text-slate-800 mb-4">Quick Actions</SmartText>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Link to="/products" className="btn-primary text-center">
                 <svg className="w-5 h-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -392,10 +391,8 @@ export const DashboardPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h1 className="text-4xl font-bold gradient-text mb-4">
-              Cashier Dashboard
-            </h1>
-            <p className="text-slate-600 mb-8">Quick access to product catalog</p>
+            <SmartText tag="h1" className="text-4xl font-bold gradient-text mb-4">Cashier Dashboard</SmartText>
+            <SmartText tag="p" className="text-slate-600 mb-8">Quick access to product catalog</SmartText>
           </div>
 
           {/* Low Stock Info for Cashier (read-only) */}
@@ -415,7 +412,7 @@ export const DashboardPage = () => {
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-slate-800 mb-1">{productStats.activeProducts}</div>
-                <div className="text-sm text-slate-600 font-medium">Available Products</div>
+                <SmartText tag="div" className="text-sm text-slate-600 font-medium">Available Products</SmartText>
               </div>
 
               <Link to="/products" className="stat-card group cursor-pointer hover:shadow-2xl">
@@ -426,8 +423,8 @@ export const DashboardPage = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="text-lg font-bold text-slate-800 mb-1">Browse Catalog</div>
-                <div className="text-sm text-slate-600 font-medium">Search products</div>
+                <div className="text-lg font-bold text-slate-800 mb-1">{t.dashboard.browseCatalog}</div>
+                <div className="text-sm text-slate-600 font-medium">{t.dashboard.searchProducts}</div>
               </Link>
             </div>
           )}
@@ -435,7 +432,7 @@ export const DashboardPage = () => {
           {/* Recent Products for Cashier */}
           {productStats && productStats.recentProducts.length > 0 && (
             <div className="glass rounded-3xl p-8 shadow-xl">
-              <h3 className="text-xl font-bold text-slate-800 mb-4">Quick Access Products</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-4">{t.dashboard.quickAccessProducts}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {productStats.recentProducts.slice(0, 4).map((product) => (
                   <Link
@@ -473,12 +470,12 @@ export const DashboardPage = () => {
           <h1 className="text-4xl font-bold gradient-text mb-4">
             Welcome, {user?.display_name}!
           </h1>
-          <p className="text-slate-600 mb-8 text-lg">You have view-only access to the system</p>
+          <SmartText tag="p" className="text-slate-600 mb-8 text-lg">You have view-only access to the system</SmartText>
 
           <div className="glass rounded-2xl p-8 inline-block mb-8">
-            <div className="mb-4 text-sm font-semibold text-slate-600">Your ID</div>
+            <SmartText tag="div" className="mb-4 text-sm font-semibold text-slate-600">Your ID</SmartText>
             <div className="text-slate-800 font-mono text-lg mb-6">{user?.id}</div>
-            <div className="mb-4 text-sm font-semibold text-slate-600">Display Name</div>
+            <div className="mb-4 text-sm font-semibold text-slate-600">{t.dashboard.displayName}</div>
             <div className="text-2xl font-bold text-slate-800">{user?.display_name}</div>
           </div>
 
@@ -487,7 +484,7 @@ export const DashboardPage = () => {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            Browse Product Catalog
+            {t.dashboard.browseProductCatalog}
           </Link>
         </div>
       </div>

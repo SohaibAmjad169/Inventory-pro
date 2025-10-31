@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
+import { useTranslation } from '../i18n/i18nContext';
 import { FileUpload } from '../components/FileUpload';
 import { ocrAPI } from '../api/ocr';
 
 export const OCRScannerPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [sourceType, setSourceType] = useState<'RECEIPT' | 'INVOICE' | 'PURCHASE_ORDER' | 'PRICE_LIST'>('RECEIPT');
@@ -32,7 +34,7 @@ export const OCRScannerPage = () => {
 
   const handleUploadAndProcess = async () => {
     if (!selectedFile) {
-      setError('Please select a file');
+      setError(t.common.error);
       return;
     }
 
@@ -76,9 +78,9 @@ export const OCRScannerPage = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down">
-          <h1 className="text-3xl font-bold gradient-text mb-2">📸 OCR Scanner</h1>
+          <h1 className="text-3xl font-bold gradient-text mb-2">📸 {t.ocr.ocrScanner}</h1>
           <p className="text-slate-600 text-sm">
-            Upload receipts or invoices to automatically extract product information
+            {t.ocr.uploadDocument}
           </p>
         </div>
 
@@ -87,13 +89,13 @@ export const OCRScannerPage = () => {
           <div className="space-y-6">
             {/* Source Type */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Document Type *</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">{t.ocr.documentType} *</label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
-                  { value: 'RECEIPT', label: '🧾 Receipt', icon: '🧾' },
-                  { value: 'INVOICE', label: '📄 Invoice', icon: '📄' },
-                  { value: 'PURCHASE_ORDER', label: '📋 Purchase Order', icon: '📋' },
-                  { value: 'PRICE_LIST', label: '💰 Price List', icon: '💰' },
+                  { value: 'RECEIPT', label: `🧾 ${t.ocr.receipt}`, icon: '🧾' },
+                  { value: 'INVOICE', label: `📄 ${t.ocr.invoice}`, icon: '📄' },
+                  { value: 'PURCHASE_ORDER', label: `📋 ${t.ocr.purchaseOrder}`, icon: '📋' },
+                  { value: 'PRICE_LIST', label: `💰 ${t.ocr.priceList}`, icon: '💰' },
                 ].map((type) => (
                   <button
                     key={type.value}
@@ -118,13 +120,13 @@ export const OCRScannerPage = () => {
             {/* Reference Number */}
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Reference Number <span className="text-slate-400">(optional)</span>
+                {t.ocr.referenceNumber}
               </label>
               <input
                 type="text"
                 value={sourceReference}
                 onChange={(e) => setSourceReference(e.target.value)}
-                placeholder="e.g., INV-2024-001"
+                placeholder={t.ocr.referenceNumber}
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -135,8 +137,8 @@ export const OCRScannerPage = () => {
                 onFileSelect={handleFileSelect}
                 accept="image/jpeg,image/png,application/pdf"
                 maxSize={10 * 1024 * 1024}
-                label="Upload Document"
-                description="Drag & drop or click to select"
+                label={t.ocr.uploadDocument}
+                description={t.ocr.uploadDocument}
               />
             ) : (
               <div className="space-y-4">
@@ -174,7 +176,7 @@ export const OCRScannerPage = () => {
                 {/* Preview */}
                 {preview && (
                   <div className="border-2 border-slate-200 rounded-xl p-4">
-                    <p className="text-sm font-semibold text-slate-700 mb-2">Preview:</p>
+                    <p className="text-sm font-semibold text-slate-700 mb-2">{t.common.view}:</p>
                     <img src={preview} alt="Preview" className="max-h-64 mx-auto rounded-lg shadow-md" />
                   </div>
                 )}
@@ -200,10 +202,10 @@ export const OCRScannerPage = () => {
               <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto mb-4"></div>
                 <p className="text-lg font-semibold text-blue-900">
-                  {isUploading ? 'Uploading document...' : 'Processing OCR... This may take a few seconds'}
+                  {isUploading ? t.common.loading : t.ocr.processing}
                 </p>
                 <p className="text-sm text-blue-700 mt-2">
-                  {isProcessing && 'Extracting product information from your document'}
+                  {isProcessing && t.ocr.extractedProducts}
                 </p>
               </div>
             )}
@@ -226,7 +228,7 @@ export const OCRScannerPage = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
-                    Processing...
+                    {t.ocr.processing}
                   </>
                 ) : (
                   <>
@@ -238,7 +240,7 @@ export const OCRScannerPage = () => {
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    Upload & Process
+                    {t.ocr.uploadAndProcess}
                   </>
                 )}
               </button>
@@ -248,7 +250,7 @@ export const OCRScannerPage = () => {
                 className="btn-secondary px-8"
                 disabled={isUploading || isProcessing}
               >
-                Cancel
+                {t.common.cancel}
               </button>
             </div>
           </div>
@@ -264,24 +266,24 @@ export const OCRScannerPage = () => {
                 clipRule="evenodd"
               />
             </svg>
-            How it works:
+            {t.ocr.howItWorks}:
           </h3>
           <ul className="space-y-2 text-sm text-blue-800">
             <li className="flex items-start gap-2">
               <span className="text-blue-600 mt-0.5">1.</span>
-              <span>Upload your receipt, invoice, or price list (JPG, PNG, or PDF)</span>
+              <span>{t.ocr.step1}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 mt-0.5">2.</span>
-              <span>Our OCR engine extracts product names, SKUs, prices, and quantities</span>
+              <span>{t.ocr.step2}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 mt-0.5">3.</span>
-              <span>Review and correct the extracted data</span>
+              <span>{t.ocr.step3}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 mt-0.5">4.</span>
-              <span>Bulk add products to your inventory with one click</span>
+              <span>{t.ocr.step4}</span>
             </li>
           </ul>
         </div>

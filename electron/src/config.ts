@@ -12,14 +12,14 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 export const config = {
   // Backend API
   backend: {
-    url: process.env.BACKEND_URL || 'http://localhost:8000',
+    url: process.env.BACKEND_URL || 'http://localhost:4000',
     healthEndpoint: process.env.BACKEND_HEALTH_ENDPOINT || '/health',
     timeout: 10000, // 10 seconds
   },
 
   // Frontend
   frontend: {
-    devUrl: process.env.FRONTEND_DEV_URL || 'http://localhost:3000',
+    devUrl: process.env.FRONTEND_DEV_URL || 'http://localhost:5173',
     prodPath: '../../frontend/dist/index.html',
   },
 

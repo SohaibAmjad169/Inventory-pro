@@ -7,6 +7,7 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { NotificationBell } from './NotificationBell';
 import { ChatbotWidget } from './ChatbotWidget';
 import { TrialMonitor } from './TrialMonitor';
+import { SmartText } from '../i18n/smartTranslation';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -110,7 +111,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       roles: Object.values(UserRole),
     },
     {
-      name: '📸 OCR Scanner',
+      name: `📸 ${t.ocr?.ocrScanner || 'OCR Scanner'}`,
       href: '/ocr/scanner',
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -270,7 +271,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       roles: [UserRole.OWNER_ULTIMATE_SUPER_ADMIN, UserRole.ADMIN],
     },
     {
-      name: 'Print Settings',
+      name: t.printSettingsConfig?.printSettings || 'Print Settings',
       href: '/settings/print',
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -489,9 +490,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {/* Footer */}
         <footer className="bg-white border-t border-gray-200">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
-            <p className="text-center text-sm text-gray-600">
-              Inventory Management System © 2025 - Built with React + Node.js
-            </p>
+            <SmartText tag="p" className="text-center text-sm text-gray-600">Inventory Management System © 2025 - Built with React + Node.js</SmartText>
           </div>
         </footer>
       </div>

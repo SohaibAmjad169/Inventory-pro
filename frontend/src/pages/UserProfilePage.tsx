@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
+import { useTranslation } from '../i18n/i18nContext';
 import { useAuthStore } from '../store/authStore';
 import { User, AuditLog } from '../types';
 import { usersAPI } from '../api/users';
 import apiClient from '../api/client';
+import { SmartText } from '../i18n/smartTranslation';
 
 type TabType = 'overview' | 'activity' | 'sessions';
 
@@ -26,6 +28,7 @@ interface ActivityStats {
 }
 
 export const UserProfilePage = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { user: currentUser } = useAuthStore();
   const [user, setUser] = useState<User | null>(null);
@@ -139,7 +142,7 @@ export const UserProfilePage = () => {
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="inline-block w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-            <p className="mt-4 text-slate-600 font-medium">Loading profile...</p>
+            <p className="mt-4 text-slate-600 font-medium">{t.common.loading}</p>
           </div>
         </div>
       </Layout>
@@ -150,7 +153,7 @@ export const UserProfilePage = () => {
     return (
       <Layout>
         <div className="glass rounded-3xl p-12 text-center shadow-xl max-w-2xl mx-auto">
-          <p className="text-red-600 font-semibold mb-4">User not found</p>
+          <p className="text-red-600 font-semibold mb-4">{t.common.error}</p>
           <Link to="/users" className="btn-primary inline-flex items-center gap-2">
             Back to Users
           </Link>
@@ -168,7 +171,7 @@ export const UserProfilePage = () => {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Back to Users
+            {t.common.back}
           </Link>
 
           <div className="flex items-start gap-6">
@@ -186,7 +189,7 @@ export const UserProfilePage = () => {
                   {user.role.replace(/_/g, ' ').toUpperCase()}
                 </span>
                 <span className={`inline-block px-3 py-1 rounded-lg font-semibold text-xs ${user.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                  {user.is_active ? '✓ Active' : '✗ Inactive'}
+                  {user.is_active ? `✓ ${t.users.active}` : `✗ ${t.users.inactive}`}
                 </span>
               </div>
             </div>
@@ -203,7 +206,7 @@ export const UserProfilePage = () => {
                 : 'text-slate-600 hover:bg-primary-50'
             }`}
           >
-            📋 Overview
+            📋 {t.users.overview}
           </button>
           <button
             onClick={() => setActiveTab('activity')}
@@ -213,7 +216,7 @@ export const UserProfilePage = () => {
                 : 'text-slate-600 hover:bg-primary-50'
             }`}
           >
-            📊 Activity
+            📊 {t.users.userDetails}
           </button>
           <button
             onClick={() => setActiveTab('sessions')}
@@ -223,7 +226,7 @@ export const UserProfilePage = () => {
                 : 'text-slate-600 hover:bg-primary-50'
             }`}
           >
-            📱 Sessions
+            📱 {t.common.status}
           </button>
         </div>
 
@@ -232,22 +235,22 @@ export const UserProfilePage = () => {
           <div className="space-y-6 animate-fade-in">
             {/* Basic Info */}
             <div className="glass rounded-3xl p-8 shadow-xl">
-              <h2 className="text-2xl font-bold text-slate-800 mb-6">Profile Information</h2>
+              <h2 className="text-2xl font-bold text-slate-800 mb-6">{t.users.userDetails}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <div className="text-sm font-semibold text-slate-600 mb-1">User ID</div>
+                  <div className="text-sm font-semibold text-slate-600 mb-1">{t.users.user} ID</div>
                   <div className="text-slate-800 font-mono text-sm bg-slate-100 px-4 py-2 rounded-lg">{user.id}</div>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-600 mb-1">Last Login</div>
-                  <div className="text-slate-800">{user.last_login_at ? formatDate(user.last_login_at) : 'Never'}</div>
+                  <div className="text-sm font-semibold text-slate-600 mb-1">{t.users.lastLogin}</div>
+                  <div className="text-slate-800">{user.last_login_at ? formatDate(user.last_login_at) : t.users.never}</div>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-600 mb-1">Created</div>
+                  <div className="text-sm font-semibold text-slate-600 mb-1">{t.users.createdAt}</div>
                   <div className="text-slate-800">{formatDate(user.created_at)}</div>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-600 mb-1">Last Updated</div>
+                  <div className="text-sm font-semibold text-slate-600 mb-1">{t.users.updatedAt}</div>
                   <div className="text-slate-800">{formatDate(user.updated_at)}</div>
                 </div>
               </div>
@@ -256,7 +259,7 @@ export const UserProfilePage = () => {
             {/* Quick Actions */}
             {isOwnProfile && (
               <div className="glass rounded-3xl p-8 shadow-xl">
-                <h2 className="text-2xl font-bold text-slate-800 mb-6">Quick Actions</h2>
+                <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Quick Actions</SmartText>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Link to="/settings/change-password" className="btn-primary text-center">
                     <svg className="w-5 h-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -283,28 +286,28 @@ export const UserProfilePage = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="glass rounded-2xl p-4 shadow-lg text-center">
                   <div className="text-3xl font-bold text-primary-600">{activityStats.totalLogins}</div>
-                  <div className="text-sm text-slate-600 mt-1">Total Logins</div>
+                  <SmartText tag="div" className="text-sm text-slate-600 mt-1">Total Logins</SmartText>
                 </div>
                 <div className="glass rounded-2xl p-4 shadow-lg text-center">
                   <div className="text-3xl font-bold text-green-600">{activityStats.loginsThisMonth}</div>
-                  <div className="text-sm text-slate-600 mt-1">Logins (30d)</div>
+                  <SmartText tag="div" className="text-sm text-slate-600 mt-1">Logins (30d)</SmartText>
                 </div>
                 <div className="glass rounded-2xl p-4 shadow-lg text-center">
                   <div className="text-3xl font-bold text-purple-600">{activityStats.productsCreated}</div>
-                  <div className="text-sm text-slate-600 mt-1">Products Created</div>
+                  <SmartText tag="div" className="text-sm text-slate-600 mt-1">Products Created</SmartText>
                 </div>
                 <div className="glass rounded-2xl p-4 shadow-lg text-center">
                   <div className="text-3xl font-bold text-orange-600">{activityStats.productsUpdated}</div>
-                  <div className="text-sm text-slate-600 mt-1">Products Updated</div>
+                  <SmartText tag="div" className="text-sm text-slate-600 mt-1">Products Updated</SmartText>
                 </div>
               </div>
             )}
 
             {/* Activity Timeline */}
             <div className="glass rounded-3xl p-8 shadow-xl">
-              <h2 className="text-2xl font-bold text-slate-800 mb-6">Recent Activity</h2>
+              <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Recent Activity</SmartText>
               {activityLogs.length === 0 ? (
-                <p className="text-center text-slate-600 py-8">No recent activity</p>
+                <SmartText tag="p" className="text-center text-slate-600 py-8">No recent activity</SmartText>
               ) : (
                 <div className="space-y-4">
                   {activityLogs.map((log, idx) => (
@@ -334,13 +337,11 @@ export const UserProfilePage = () => {
             {/* Sessions Header */}
             <div className="glass rounded-3xl p-6 shadow-xl flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-slate-800">Active Sessions</h2>
+                <SmartText tag="h2" className="text-2xl font-bold text-slate-800">Active Sessions</SmartText>
                 <p className="text-slate-600 text-sm mt-1">{sessions.length} active session(s)</p>
               </div>
               {sessions.length > 1 && (
-                <button onClick={handleRevokeAllSessions} className="btn-secondary">
-                  Revoke All Others
-                </button>
+                <button onClick={handleRevokeAllSessions} className="btn-secondary"><SmartText>Revoke All Others</SmartText></button>
               )}
             </div>
 
@@ -348,7 +349,7 @@ export const UserProfilePage = () => {
             <div className="space-y-4">
               {sessions.length === 0 ? (
                 <div className="glass rounded-3xl p-12 text-center shadow-xl">
-                  <p className="text-slate-600">No active sessions</p>
+                  <SmartText tag="p" className="text-slate-600">No active sessions</SmartText>
                 </div>
               ) : (
                 sessions.map((session, idx) => (
@@ -362,9 +363,7 @@ export const UserProfilePage = () => {
                         <div className="flex items-center gap-2 mb-2">
                           <div className="font-semibold text-slate-800 text-lg">{session.device_name || 'Unknown Device'}</div>
                           {session.is_current && (
-                            <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-lg">
-                              Current Session
-                            </span>
+                            <SmartText tag="span" className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-lg">Current Session</SmartText>
                           )}
                         </div>
                         <div className="text-sm text-slate-600 space-y-1">

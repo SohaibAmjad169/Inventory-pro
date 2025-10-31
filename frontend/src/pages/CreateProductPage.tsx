@@ -6,8 +6,17 @@ import { FileUpload } from '../components/FileUpload';
 import { productsAPI } from '../api/products';
 import { inventoryAPI } from '../api/inventory';
 import { Category } from '../types';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const CreateProductPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('PRODUCT-001');
+  const placeholder2 = useSmartPlaceholder('Dell XPS 13 Laptop');
+  const placeholder3 = useSmartPlaceholder('Detailed product description...');
+  const placeholder4 = useSmartPlaceholder('Apple');
+  const placeholder5 = useSmartPlaceholder('Warehouse A, Shelf 3');
+
+
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -131,8 +140,8 @@ export const CreateProductPage = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down">
-          <h1 className="text-3xl font-bold gradient-text mb-2">Add New Product</h1>
-          <p className="text-slate-600 text-sm">Create a new product in the catalog</p>
+          <SmartText tag="h1" className="text-3xl font-bold gradient-text mb-2">Add New Product</SmartText>
+          <SmartText tag="p" className="text-slate-600 text-sm">Create a new product in the catalog</SmartText>
         </div>
 
         {/* Form */}
@@ -151,7 +160,7 @@ export const CreateProductPage = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">SKU *</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">SKU *</SmartText>
                   <div className="flex gap-2">
                     <div className="flex-1">
                       <input
@@ -160,9 +169,9 @@ export const CreateProductPage = () => {
                         onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
                         required
                         className="input-field"
-                        placeholder="PRODUCT-001"
+                        placeholder={placeholder1}
                       />
-                      <p className="mt-1 text-xs text-slate-500">Unique product identifier</p>
+                      <SmartText tag="p" className="mt-1 text-xs text-slate-500">Unique product identifier</SmartText>
                     </div>
                     <button
                       type="button"
@@ -180,7 +189,7 @@ export const CreateProductPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Barcode</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Barcode</SmartText>
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -205,25 +214,25 @@ export const CreateProductPage = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Product Name *</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Product Name *</SmartText>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     className="input-field"
-                    placeholder="Dell XPS 13 Laptop"
+                    placeholder={placeholder2}
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Description</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Description</SmartText>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="input-field"
                     rows={3}
-                    placeholder="Detailed product description..."
+                    placeholder={placeholder3}
                   />
                 </div>
               </div>
@@ -242,13 +251,13 @@ export const CreateProductPage = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Brand</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Brand</SmartText>
                   <input
                     type="text"
                     value={formData.brand}
                     onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                     className="input-field"
-                    placeholder="Apple"
+                    placeholder={placeholder4}
                   />
                 </div>
 
@@ -276,7 +285,7 @@ export const CreateProductPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Unit of Measure</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Unit of Measure</SmartText>
                   <select
                     value={formData.uom}
                     onChange={(e) => setFormData({ ...formData, uom: e.target.value })}
@@ -305,7 +314,7 @@ export const CreateProductPage = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Selling Price *</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Selling Price *</SmartText>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">$</span>
                     <input
@@ -321,7 +330,7 @@ export const CreateProductPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Cost Price</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Cost Price</SmartText>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">$</span>
                     <input
@@ -333,7 +342,7 @@ export const CreateProductPage = () => {
                       placeholder="50.00"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">Optional: for profit tracking</p>
+                  <SmartText tag="p" className="mt-1 text-xs text-slate-500">Optional: for profit tracking</SmartText>
                 </div>
               </div>
 
@@ -341,7 +350,7 @@ export const CreateProductPage = () => {
               {formData.cost > 0 && formData.price > 0 && (
                 <div className="mt-4 p-4 glass rounded-xl">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-slate-700">Profit Margin:</span>
+                    <SmartText tag="span" className="text-sm font-medium text-slate-700">Profit Margin:</SmartText>
                     <span className="text-lg font-bold text-green-600">
                       {(((formData.price - formData.cost) / formData.price) * 100).toFixed(1)}%
                     </span>
@@ -363,7 +372,7 @@ export const CreateProductPage = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Stock Quantity</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Stock Quantity</SmartText>
                   <input
                     type="number"
                     value={formData.stock_quantity}
@@ -371,11 +380,11 @@ export const CreateProductPage = () => {
                     className="input-field"
                     placeholder="100"
                   />
-                  <p className="mt-1 text-xs text-slate-500">Current available stock</p>
+                  <SmartText tag="p" className="mt-1 text-xs text-slate-500">Current available stock</SmartText>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Reorder Level</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Reorder Level</SmartText>
                   <input
                     type="number"
                     value={formData.reorder_level}
@@ -383,11 +392,11 @@ export const CreateProductPage = () => {
                     className="input-field"
                     placeholder="20"
                   />
-                  <p className="mt-1 text-xs text-slate-500">Alert when stock reaches this level</p>
+                  <SmartText tag="p" className="mt-1 text-xs text-slate-500">Alert when stock reaches this level</SmartText>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Reorder Quantity</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Reorder Quantity</SmartText>
                   <input
                     type="number"
                     value={formData.reorder_quantity}
@@ -395,11 +404,11 @@ export const CreateProductPage = () => {
                     className="input-field"
                     placeholder="50"
                   />
-                  <p className="mt-1 text-xs text-slate-500">How much to reorder</p>
+                  <SmartText tag="p" className="mt-1 text-xs text-slate-500">How much to reorder</SmartText>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Max Stock Level</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Max Stock Level</SmartText>
                   <input
                     type="number"
                     value={formData.max_stock_level}
@@ -407,19 +416,19 @@ export const CreateProductPage = () => {
                     className="input-field"
                     placeholder="500"
                   />
-                  <p className="mt-1 text-xs text-slate-500">Maximum stock to keep</p>
+                  <SmartText tag="p" className="mt-1 text-xs text-slate-500">Maximum stock to keep</SmartText>
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Location</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Location</SmartText>
                   <input
                     type="text"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     className="input-field"
-                    placeholder="Warehouse A, Shelf 3"
+                    placeholder={placeholder5}
                   />
-                  <p className="mt-1 text-xs text-slate-500">Physical storage location</p>
+                  <SmartText tag="p" className="mt-1 text-xs text-slate-500">Physical storage location</SmartText>
                 </div>
               </div>
             </div>
@@ -483,9 +492,7 @@ export const CreateProductPage = () => {
                             </svg>
                           </button>
                           {index === 0 && (
-                            <div className="absolute bottom-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md shadow-md font-semibold">
-                              Primary
-                            </div>
+                            <SmartText tag="div" className="absolute bottom-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-md shadow-md font-semibold">Primary</SmartText>
                           )}
                         </div>
                       ))}

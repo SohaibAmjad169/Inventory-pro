@@ -4,6 +4,7 @@ import { useAuthStore } from '../store/authStore';
 import { useTranslation } from '../i18n/i18nContext';
 import { PurchaseOrder, POStatus, UserRole } from '../types';
 import { inventoryAPI } from '../api/inventory';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 interface GRNItem {
   po_item_id: string;
@@ -17,6 +18,11 @@ interface GRNItem {
 }
 
 export const GoodsReceiptPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Any discrepancies or notes...');
+  const placeholder2 = useSmartPlaceholder('Overall notes about this receipt...');
+
+
   const { user } = useAuthStore();
   const { t } = useTranslation();
   const [approvedPOs, setApprovedPOs] = useState<PurchaseOrder[]>([]);
@@ -129,22 +135,22 @@ export const GoodsReceiptPage = () => {
         {/* Header */}
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down">
           <h1 className="text-3xl font-bold gradient-text mb-2">{t.nav.goodsReceipt}</h1>
-          <p className="text-slate-600 text-sm">Receive goods against approved purchase orders</p>
+          <SmartText tag="p" className="text-slate-600 text-sm">Receive goods against approved purchase orders</SmartText>
         </div>
 
         {/* Approved POs */}
         <div>
-          <h2 className="text-xl font-bold text-slate-800 mb-4">Approved Purchase Orders</h2>
+          <SmartText tag="h2" className="text-xl font-bold text-slate-800 mb-4">Approved Purchase Orders</SmartText>
           <div className="space-y-4">
             {isLoading ? (
               <div className="p-12 text-center glass rounded-3xl">
                 <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-                <p className="mt-4 text-slate-600">Loading purchase orders...</p>
+                <SmartText tag="p" className="mt-4 text-slate-600">Loading purchase orders...</SmartText>
               </div>
             ) : approvedPOs.length === 0 ? (
               <div className="p-12 text-center glass rounded-3xl">
-                <p className="text-slate-600 mb-2">No approved purchase orders awaiting receipt</p>
-                <p className="text-sm text-slate-500">Purchase orders must be approved before goods can be received</p>
+                <SmartText tag="p" className="text-slate-600 mb-2">No approved purchase orders awaiting receipt</SmartText>
+                <SmartText tag="p" className="text-sm text-slate-500">Purchase orders must be approved before goods can be received</SmartText>
               </div>
             ) : (
               approvedPOs.map((po, index) => (
@@ -196,14 +202,14 @@ export const GoodsReceiptPage = () => {
       {showModal && selectedPO && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in p-4">
           <div className="glass rounded-3xl p-8 max-w-5xl w-full shadow-2xl animate-scale-in max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Receive Goods</h2>
+            <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-2">Receive Goods</SmartText>
             <p className="text-sm text-slate-600 mb-6">PO: {selectedPO.po_number} • Supplier: {selectedPO.supplier?.name}</p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Date */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Received Date *</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Received Date *</SmartText>
                   <input
                     type="date"
                     value={formData.received_date}
@@ -216,7 +222,7 @@ export const GoodsReceiptPage = () => {
 
               {/* Items to Receive */}
               <div>
-                <h3 className="text-lg font-bold text-slate-800 mb-4">Items to Receive</h3>
+                <SmartText tag="h3" className="text-lg font-bold text-slate-800 mb-4">Items to Receive</SmartText>
                 <div className="space-y-4">
                   {formData.items.map((item, index) => (
                     <div key={index} className="glass rounded-xl p-4">
@@ -227,12 +233,12 @@ export const GoodsReceiptPage = () => {
 
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div className="glass rounded-lg p-3 bg-blue-50/30">
-                          <div className="text-xs text-slate-600 mb-1">Expected</div>
+                          <SmartText tag="div" className="text-xs text-slate-600 mb-1">Expected</SmartText>
                           <div className="text-2xl font-bold text-blue-600">{item.expected_quantity}</div>
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-slate-700 mb-1">Received *</label>
+                          <SmartText tag="label" className="block text-xs font-semibold text-slate-700 mb-1">Received *</SmartText>
                           <input
                             type="number"
                             value={item.received_quantity}
@@ -245,7 +251,7 @@ export const GoodsReceiptPage = () => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-slate-700 mb-1">Damaged</label>
+                          <SmartText tag="label" className="block text-xs font-semibold text-slate-700 mb-1">Damaged</SmartText>
                           <input
                             type="number"
                             value={item.damaged_quantity}
@@ -256,7 +262,7 @@ export const GoodsReceiptPage = () => {
                         </div>
 
                         <div className="glass rounded-lg p-3 bg-green-50/30">
-                          <div className="text-xs text-slate-600 mb-1">Net Received</div>
+                          <SmartText tag="div" className="text-xs text-slate-600 mb-1">Net Received</SmartText>
                           <div className="text-2xl font-bold text-green-600">
                             {item.received_quantity - item.damaged_quantity}
                           </div>
@@ -265,13 +271,13 @@ export const GoodsReceiptPage = () => {
 
                       {/* Item Notes */}
                       <div className="mt-3">
-                        <label className="block text-xs font-semibold text-slate-700 mb-1">Notes</label>
+                        <SmartText tag="label" className="block text-xs font-semibold text-slate-700 mb-1">Notes</SmartText>
                         <input
                           type="text"
                           value={item.notes}
                           onChange={(e) => handleItemChange(index, 'notes', e.target.value)}
                           className="input-field text-sm"
-                          placeholder="Any discrepancies or notes..."
+                          placeholder={placeholder1}
                         />
                       </div>
 
@@ -295,13 +301,13 @@ export const GoodsReceiptPage = () => {
 
               {/* GRN Notes */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Receipt Notes</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Receipt Notes</SmartText>
                 <textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   className="input-field"
                   rows={2}
-                  placeholder="Overall notes about this receipt..."
+                  placeholder={placeholder2}
                 />
               </div>
 
@@ -312,10 +318,10 @@ export const GoodsReceiptPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div className="text-sm text-blue-800">
-                    <p className="font-semibold mb-1">What happens next:</p>
-                    <p>• Product stock will be increased by net received quantity (received - damaged)</p>
-                    <p>• Stock movements will be logged automatically</p>
-                    <p>• Purchase order status will update to Partially Received or Received</p>
+                    <SmartText tag="p" className="font-semibold mb-1">What happens next:</SmartText>
+                    <SmartText tag="p">• Product stock will be increased by net received quantity (received - damaged)</SmartText>
+                    <SmartText tag="p">• Stock movements will be logged automatically</SmartText>
+                    <SmartText tag="p">• Purchase order status will update to Partially Received or Received</SmartText>
                   </div>
                 </div>
               </div>

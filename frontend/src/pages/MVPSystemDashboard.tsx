@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from '../i18n/i18nContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SmartText } from '../i18n/smartTranslation';
 import { 
   Plus, 
   Users, 
@@ -49,6 +51,7 @@ interface LicensePricing {
 }
 
 const MVPSystemDashboard: React.FC = () => {
+  const { t } = useTranslation();
   const [statistics, setStatistics] = useState<OnboardingStatistics | null>(null);
   const [licensePricing, setLicensePricing] = useState<LicensePricing>({});
   const [loading, setLoading] = useState(true);
@@ -179,12 +182,12 @@ const MVPSystemDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">MVP System Dashboard</h1>
-          <p className="text-gray-600">Complete multi-client POS distribution system</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t.dashboard.welcome}</h1>
+          <p className="text-gray-600">{t.dashboard.statistics}</p>
         </div>
         <Button onClick={() => setShowOnboardForm(true)}>
           <Plus className="w-4 h-4 mr-2" />
-          Onboard New Client
+          {t.common.create}
         </Button>
       </div>
 
@@ -193,7 +196,7 @@ const MVPSystemDashboard: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Clients</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.common.total}</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -206,7 +209,7 @@ const MVPSystemDashboard: React.FC = () => {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Clients</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.users.active}</CardTitle>
               <CheckCircle className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
@@ -219,27 +222,23 @@ const MVPSystemDashboard: React.FC = () => {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Trial Clients</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.common.status}</CardTitle>
               <Clock className="h-4 w-4 text-yellow-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-yellow-600">{statistics.trialClients}</div>
-              <p className="text-xs text-muted-foreground">
-                50 credits each
-              </p>
+              <SmartText tag="p" className="text-xs text-muted-foreground">50 credits each</SmartText>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Suspended</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.common.status}</CardTitle>
               <AlertCircle className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">{statistics.suspendedClients}</div>
-              <p className="text-xs text-muted-foreground">
-                Need attention
-              </p>
+              <SmartText tag="p" className="text-xs text-muted-foreground">Need attention</SmartText>
             </CardContent>
           </Card>
         </div>
@@ -267,29 +266,29 @@ const MVPSystemDashboard: React.FC = () => {
                   <div className="flex items-center space-x-3">
                     <Globe className="w-5 h-5 text-blue-600" />
                     <div>
-                      <div className="font-medium">Master Server (France)</div>
-                      <div className="text-sm text-gray-600">Central control panel</div>
+                      <SmartText tag="div" className="font-medium">Master Server (France)</SmartText>
+                      <SmartText tag="div" className="text-sm text-gray-600">Central control panel</SmartText>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Database className="w-5 h-5 text-green-600" />
                     <div>
-                      <div className="font-medium">Separate Database per Client</div>
-                      <div className="text-sm text-gray-600">Complete data isolation</div>
+                      <SmartText tag="div" className="font-medium">Separate Database per Client</SmartText>
+                      <SmartText tag="div" className="text-sm text-gray-600">Complete data isolation</SmartText>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Smartphone className="w-5 h-5 text-purple-600" />
                     <div>
-                      <div className="font-medium">Desktop Apps Worldwide</div>
-                      <div className="text-sm text-gray-600">Offline-first design</div>
+                      <SmartText tag="div" className="font-medium">Desktop Apps Worldwide</SmartText>
+                      <SmartText tag="div" className="text-sm text-gray-600">Offline-first design</SmartText>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Key className="w-5 h-5 text-orange-600" />
                     <div>
-                      <div className="font-medium">License Activation</div>
-                      <div className="text-sm text-gray-600">Email/Phone based</div>
+                      <SmartText tag="div" className="font-medium">License Activation</SmartText>
+                      <SmartText tag="div" className="text-sm text-gray-600">Email/Phone based</SmartText>
                     </div>
                   </div>
                 </div>
@@ -304,23 +303,23 @@ const MVPSystemDashboard: React.FC = () => {
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                    <div className="text-sm">Install App → Guest Screen</div>
+                    <SmartText tag="div" className="text-sm">Install App → Guest Screen</SmartText>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                    <div className="text-sm">Use POS → Credits Consumed</div>
+                    <SmartText tag="div" className="text-sm">Use POS → Credits Consumed</SmartText>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">3</div>
-                    <div className="text-sm">Credits End → System Locks</div>
+                    <SmartText tag="div" className="text-sm">Credits End → System Locks</SmartText>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">4</div>
-                    <div className="text-sm">Contact Admin → License Generated</div>
+                    <SmartText tag="div" className="text-sm">Contact Admin → License Generated</SmartText>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">5</div>
-                    <div className="text-sm">Enter License → System Activates</div>
+                    <SmartText tag="div" className="text-sm">Enter License → System Activates</SmartText>
                   </div>
                 </div>
               </CardContent>
@@ -426,14 +425,14 @@ const MVPSystemDashboard: React.FC = () => {
                     <Button type="button" variant="outline" onClick={() => setShowOnboardForm(false)}>
                       Cancel
                     </Button>
-                    <Button type="submit">Onboard Client</Button>
+                    <Button type="submit"><SmartText>Onboard Client</SmartText></Button>
                   </div>
                 </form>
               ) : (
                 <div className="text-center py-8">
                   <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Onboard New Client</h3>
-                  <p className="text-gray-600 mb-4">Create a new client instance with separate database and trial session</p>
+                  <SmartText tag="h3" className="text-lg font-semibold text-gray-900 mb-2">Onboard New Client</SmartText>
+                  <SmartText tag="p" className="text-gray-600 mb-4">Create a new client instance with separate database and trial session</SmartText>
                   <Button onClick={() => setShowOnboardForm(true)}>
                     <Plus className="w-4 h-4 mr-2" />
                     Start Onboarding
@@ -470,13 +469,13 @@ const MVPSystemDashboard: React.FC = () => {
                 </div>
                 
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 mb-2">License Activation Process</h4>
+                  <SmartText tag="h4" className="font-semibold text-blue-900 mb-2">License Activation Process</SmartText>
                   <div className="text-sm text-blue-800 space-y-1">
-                    <div>1. Client contacts master admin via email/phone</div>
-                    <div>2. Master admin generates unique license key</div>
-                    <div>3. License key sent to client via email/SMS</div>
-                    <div>4. Client enters license key in their POS app</div>
-                    <div>5. System activates with full features</div>
+                    <SmartText tag="div">1. Client contacts master admin via email/phone</SmartText>
+                    <SmartText tag="div">2. Master admin generates unique license key</SmartText>
+                    <SmartText tag="div">3. License key sent to client via email/SMS</SmartText>
+                    <SmartText tag="div">4. Client enters license key in their POS app</SmartText>
+                    <SmartText tag="div">5. System activates with full features</SmartText>
                   </div>
                 </div>
               </div>
@@ -496,38 +495,38 @@ const MVPSystemDashboard: React.FC = () => {
                   <div className="text-center p-4 bg-green-50 rounded-lg">
                     <CreditCard className="w-8 h-8 text-green-600 mx-auto mb-2" />
                     <div className="text-2xl font-bold text-green-600">50</div>
-                    <div className="text-sm text-green-600">Initial Credits</div>
+                    <SmartText tag="div" className="text-sm text-green-600">Initial Credits</SmartText>
                   </div>
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <Activity className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                     <div className="text-2xl font-bold text-blue-600">1-10</div>
-                    <div className="text-sm text-blue-600">Credits per Operation</div>
+                    <SmartText tag="div" className="text-sm text-blue-600">Credits per Operation</SmartText>
                   </div>
                   <div className="text-center p-4 bg-yellow-50 rounded-lg">
                     <Clock className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
                     <div className="text-2xl font-bold text-yellow-600">0</div>
-                    <div className="text-sm text-yellow-600">System Locks</div>
+                    <SmartText tag="div" className="text-sm text-yellow-600">System Locks</SmartText>
                   </div>
                 </div>
                 
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Credit Consumption Rates</h4>
+                  <SmartText tag="h4" className="font-semibold text-gray-900 mb-2">Credit Consumption Rates</SmartText>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="font-medium">Free Operations:</div>
-                      <div className="text-gray-600">Product View, Product Search</div>
+                      <SmartText tag="div" className="font-medium">Free Operations:</SmartText>
+                      <SmartText tag="div" className="text-gray-600">Product View, Product Search</SmartText>
                     </div>
                     <div>
-                      <div className="font-medium">1 Credit:</div>
-                      <div className="text-gray-600">Sale Create, Product Update, Product Delete</div>
+                      <SmartText tag="div" className="font-medium">1 Credit:</SmartText>
+                      <SmartText tag="div" className="text-gray-600">Sale Create, Product Update, Product Delete</SmartText>
                     </div>
                     <div>
-                      <div className="font-medium">2 Credits:</div>
-                      <div className="text-gray-600">Product Create, Inventory Adjust</div>
+                      <SmartText tag="div" className="font-medium">2 Credits:</SmartText>
+                      <SmartText tag="div" className="text-gray-600">Product Create, Inventory Adjust</SmartText>
                     </div>
                     <div>
-                      <div className="font-medium">3-10 Credits:</div>
-                      <div className="text-gray-600">Reports, User Management, System Settings</div>
+                      <SmartText tag="div" className="font-medium">3-10 Credits:</SmartText>
+                      <SmartText tag="div" className="text-gray-600">Reports, User Management, System Settings</SmartText>
                     </div>
                   </div>
                 </div>
@@ -546,42 +545,40 @@ const MVPSystemDashboard: React.FC = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold mb-2">Database Strategy</h4>
+                    <SmartText tag="h4" className="font-semibold mb-2">Database Strategy</SmartText>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center space-x-2">
                         <Database className="w-4 h-4 text-green-600" />
-                        <span>Separate database per client</span>
+                        <SmartText tag="span">Separate database per client</SmartText>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Database className="w-4 h-4 text-blue-600" />
-                        <span>Complete data isolation</span>
+                        <SmartText tag="span">Complete data isolation</SmartText>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Database className="w-4 h-4 text-purple-600" />
-                        <span>Automatic backup & restore</span>
+                        <SmartText tag="span">Automatic backup & restore</SmartText>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Database className="w-4 h-4 text-orange-600" />
-                        <span>Scalable architecture</span>
+                        <SmartText tag="span">Scalable architecture</SmartText>
                       </div>
                     </div>
                   </div>
                   
                   <div>
-                    <h4 className="font-semibold mb-2">Database Naming Convention</h4>
+                    <SmartText tag="h4" className="font-semibold mb-2">Database Naming Convention</SmartText>
                     <div className="space-y-2 text-sm">
                       <div className="font-mono bg-gray-100 p-2 rounded">
                         pos_client_{`{client_id}`}
                       </div>
-                      <div className="text-gray-600">
-                        Example: pos_client_565c55ab_df58_417e_9baa_d1b2b454335b
-                      </div>
+                      <SmartText tag="div" className="text-gray-600">Example: pos_client_565c55ab_df58_417e_9baa_d1b2b454335b</SmartText>
                     </div>
                   </div>
                 </div>
                 
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 mb-2">Database Operations</h4>
+                  <SmartText tag="h4" className="font-semibold text-blue-900 mb-2">Database Operations</SmartText>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Button variant="outline" className="justify-start">
                       <Database className="w-4 h-4 mr-2" />

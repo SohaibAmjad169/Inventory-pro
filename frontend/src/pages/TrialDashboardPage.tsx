@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../i18n/i18nContext';
 import licensingAPI, { TrialStats } from '../api/licensing';
 import { getOrGenerateFingerprint } from '../utils/device-fingerprint';
+import { SmartText } from '../i18n/smartTranslation';
 
 const TrialDashboardPage: React.FC = () => {
   const { t } = useTranslation();
@@ -202,9 +203,7 @@ const TrialDashboardPage: React.FC = () => {
           <p className="text-4xl font-bold text-gray-900">
             {trialStats.credits_used}
           </p>
-          <p className="text-sm text-gray-600 mt-1">
-            invoices created
-          </p>
+          <SmartText tag="p" className="text-sm text-gray-600 mt-1">invoices created</SmartText>
         </div>
 
         {/* Trial Status */}
@@ -221,14 +220,10 @@ const TrialDashboardPage: React.FC = () => {
             {trialStats.status}
           </p>
           {trialStats.is_vm_detected && (
-            <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded">
-              VM Detected
-            </span>
+            <SmartText tag="span" className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded">VM Detected</SmartText>
           )}
           {trialStats.is_suspicious && (
-            <span className="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs rounded ml-1">
-              Suspicious
-            </span>
+            <SmartText tag="span" className="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs rounded ml-1">Suspicious</SmartText>
           )}
         </div>
 
@@ -339,13 +334,13 @@ const TrialDashboardPage: React.FC = () => {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span>support@inventorypro.com</span>
+              <SmartText tag="span">support@inventorypro.com</SmartText>
             </div>
             <div className="flex items-center gap-2 text-gray-700">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>Documentation & FAQ</span>
+              <SmartText tag="span">Documentation & FAQ</SmartText>
             </div>
           </div>
         </div>

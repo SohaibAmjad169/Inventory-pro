@@ -1,8 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
+import { useTranslation } from '../i18n/i18nContext';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const LoginPage = () => {
+  const { t } = useTranslation();
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -39,10 +42,10 @@ export const LoginPage = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 gradient-text text-shadow-lg">
-            Welcome Back
+            {t.auth.login}
           </h1>
           <p className="text-slate-600 text-sm">
-            Sign in to your account
+            {t.auth.signIn}
           </p>
         </div>
 
@@ -50,7 +53,7 @@ export const LoginPage = () => {
           {/* Username/Email Input */}
           <div className="animate-slide-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Username or Email
+              {t.auth.username}
             </label>
             <input
               type="text"
@@ -58,14 +61,14 @@ export const LoginPage = () => {
               onChange={(e) => setIdentifier(e.target.value)}
               required
               className="input-field"
-              placeholder="Enter your username or email"
+              placeholder={t.auth.username}
             />
           </div>
 
           {/* Password Input */}
           <div className="animate-slide-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
-              Password
+              {t.auth.password}
             </label>
             <input
               type="password"
@@ -73,7 +76,7 @@ export const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="input-field"
-              placeholder="Enter your password"
+              placeholder={t.auth.password}
             />
           </div>
 
@@ -96,21 +99,21 @@ export const LoginPage = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Signing in...
+                {t.common.loading}
               </span>
             ) : (
-              'Sign In'
+              t.auth.signIn
             )}
           </button>
         </form>
 
         {/* Demo Credentials */}
         <div className="mt-8 glass rounded-xl p-4 animate-slide-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-          <p className="text-xs font-semibold text-slate-700 mb-2">Demo Credentials:</p>
+          <SmartText tag="p" className="text-xs font-semibold text-slate-700 mb-2">Demo Credentials:</SmartText>
           <div className="space-y-1 text-xs text-slate-600">
-            <p><span className="font-mono bg-slate-100 px-2 py-1 rounded">owner</span> / <span className="font-mono bg-slate-100 px-2 py-1 rounded">Owner@123456</span></p>
-            <p><span className="font-mono bg-slate-100 px-2 py-1 rounded">admin</span> / <span className="font-mono bg-slate-100 px-2 py-1 rounded">Admin@123456</span></p>
-            <p><span className="font-mono bg-slate-100 px-2 py-1 rounded">guest_user</span> / <span className="font-mono bg-slate-100 px-2 py-1 rounded">Guest@123456</span></p>
+            <p><SmartText tag="span" className="font-mono bg-slate-100 px-2 py-1 rounded">owner</SmartText> / <SmartText tag="span" className="font-mono bg-slate-100 px-2 py-1 rounded">Owner@123456</SmartText></p>
+            <p><SmartText tag="span" className="font-mono bg-slate-100 px-2 py-1 rounded">admin</SmartText> / <SmartText tag="span" className="font-mono bg-slate-100 px-2 py-1 rounded">Admin@123456</SmartText></p>
+            <p><SmartText tag="span" className="font-mono bg-slate-100 px-2 py-1 rounded">guest_user</SmartText> / <SmartText tag="span" className="font-mono bg-slate-100 px-2 py-1 rounded">Guest@123456</SmartText></p>
           </div>
         </div>
       </div>

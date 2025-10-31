@@ -35,6 +35,7 @@ import ClientManagement from './pages/ClientManagement';
 import BillingAnalytics from './pages/BillingAnalytics';
 import MVPSystemDashboard from './pages/MVPSystemDashboard';
 import { UserRole } from './types';
+import { SmartText } from './i18n/smartTranslation';
 
 function App() {
   const { loadUser, isLoading } = useAuthStore();
@@ -52,9 +53,7 @@ function App() {
         height: '100vh',
         fontSize: '1.25rem',
         color: '#64748b'
-      }}>
-        Loading...
-      </div>
+      }}><SmartText>Loading...</SmartText></div>
     );
   }
 
@@ -340,7 +339,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
         <Route
           path="/unauthorized"
           element={
@@ -353,12 +351,8 @@ function App() {
               textAlign: 'center'
             }}>
               <h1 style={{ fontSize: '3rem', color: '#ef4444', margin: '0 0 1rem' }}>403</h1>
-              <h2 style={{ fontSize: '1.5rem', color: '#1e293b', margin: '0 0 0.5rem' }}>
-                Unauthorized Access
-              </h2>
-              <p style={{ color: '#64748b', margin: '0 0 2rem' }}>
-                You don't have permission to access this page
-              </p>
+              <h2 style={{ fontSize: '1.5rem', color: '#1e293b', margin: '0 0 0.5rem' }}><SmartText>Unauthorized Access</SmartText></h2>
+              <p style={{ color: '#64748b', margin: '0 0 2rem' }}><SmartText>You don't have permission to access this page</SmartText></p>
               <a
                 href="/"
                 style={{

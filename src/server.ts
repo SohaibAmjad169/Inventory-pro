@@ -41,6 +41,16 @@ const app = express();
 
 // ===== MIDDLEWARE =====
 
+// Serve frontend static files
+import path from 'path';
+const frontendDistPath = path.resolve(__dirname, '../frontend/dist');
+app.use(express.static(frontendDistPath));
+
+// For all non-API routes, serve index.html
+app.get(/^\/(?!api).*/, (_, res) => {
+  res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
+
 // Security
 app.use(helmet());
 app.use(cors({

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../types';
 import { inventoryAPI } from '../api/inventory';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const LowStockAlert = () => {
   const [lowStockProducts, setLowStockProducts] = useState<Product[]>([]);
@@ -32,8 +33,8 @@ export const LowStockAlert = () => {
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Low Stock Alerts</h3>
-            <p className="text-sm text-slate-600">Loading...</p>
+            <SmartText tag="h3" className="text-lg font-bold text-slate-800">Low Stock Alerts</SmartText>
+            <SmartText tag="p" className="text-sm text-slate-600">Loading...</SmartText>
           </div>
         </div>
       </div>
@@ -50,8 +51,8 @@ export const LowStockAlert = () => {
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Stock Levels</h3>
-            <p className="text-sm text-green-600 font-semibold">✓ All products above reorder level</p>
+            <SmartText tag="h3" className="text-lg font-bold text-slate-800">Stock Levels</SmartText>
+            <SmartText tag="p" className="text-sm text-green-600 font-semibold">✓ All products above reorder level</SmartText>
           </div>
         </div>
       </div>
@@ -68,7 +69,7 @@ export const LowStockAlert = () => {
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Low Stock Alerts</h3>
+            <SmartText tag="h3" className="text-lg font-bold text-slate-800">Low Stock Alerts</SmartText>
             <p className="text-sm text-yellow-600 font-semibold">⚠️ {lowStockProducts.length} product(s) need attention</p>
           </div>
         </div>

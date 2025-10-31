@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { ReceiptData } from '../api/receipts';
 import { useTranslation } from '../i18n/i18nContext';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 interface ReceiptModalProps {
   receiptData: ReceiptData;
@@ -17,6 +18,9 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
   onEmail,
   onReprint,
 }) => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('customer@example.com');
+
   const { t } = useTranslation();
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [email, setEmail] = useState('');
@@ -89,24 +93,24 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
             {/* Transaction Info */}
             <div className="space-y-1 text-sm mb-4">
               <div className="flex justify-between">
-                <span className="font-semibold">Receipt #:</span>
+                <SmartText tag="span" className="font-semibold">Receipt #:</SmartText>
                 <span>{receiptData.receipt_number}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Transaction:</span>
+                <SmartText tag="span" className="font-semibold">Transaction:</SmartText>
                 <span>{receiptData.transaction_number}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Date:</span>
+                <SmartText tag="span" className="font-semibold">Date:</SmartText>
                 <span>{new Date(receiptData.transaction_date).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Cashier:</span>
+                <SmartText tag="span" className="font-semibold">Cashier:</SmartText>
                 <span>{receiptData.cashier_name}</span>
               </div>
               {receiptData.customer && (
                 <div className="flex justify-between">
-                  <span className="font-semibold">Customer:</span>
+                  <SmartText tag="span" className="font-semibold">Customer:</SmartText>
                   <span>{receiptData.customer.name} ({receiptData.customer.customer_number})</span>
                 </div>
               )}
@@ -137,21 +141,21 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
             {/* Totals */}
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span>Subtotal:</span>
+                <SmartText tag="span">Subtotal:</SmartText>
                 <span>${receiptData.subtotal.toFixed(2)}</span>
               </div>
               {receiptData.discount_total > 0 && (
                 <div className="flex justify-between text-red-600">
-                  <span>Discount:</span>
+                  <SmartText tag="span">Discount:</SmartText>
                   <span>-${receiptData.discount_total.toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span>Tax:</span>
+                <SmartText tag="span">Tax:</SmartText>
                 <span>${receiptData.tax_total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg font-bold border-t-2 border-gray-400 pt-2">
-                <span>TOTAL:</span>
+                <SmartText tag="span">TOTAL:</SmartText>
                 <span>${receiptData.total.toFixed(2)}</span>
               </div>
             </div>
@@ -166,7 +170,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
               </div>
               {receiptData.change_amount > 0 && (
                 <div className="flex justify-between font-semibold">
-                  <span>Change:</span>
+                  <SmartText tag="span">Change:</SmartText>
                   <span>${receiptData.change_amount.toFixed(2)}</span>
                 </div>
               )}
@@ -192,7 +196,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
                 <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
                 <div className="flex flex-col items-center">
                   <img src={receiptData.qr_code_data} alt="QR Code" className="w-32 h-32" />
-                  <p className="text-xs text-gray-600 mt-2">Scan for digital receipt</p>
+                  <SmartText tag="p" className="text-xs text-gray-600 mt-2">Scan for digital receipt</SmartText>
                 </div>
               </>
             )}
@@ -201,7 +205,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
               <>
                 <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
                 <div className="text-center text-xs text-gray-600">
-                  <p className="font-semibold mb-1">Return Policy</p>
+                  <SmartText tag="p" className="font-semibold mb-1">Return Policy</SmartText>
                   <p>{receiptData.return_policy}</p>
                 </div>
               </>
@@ -275,7 +279,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="customer@example.com"
+                placeholder={placeholder1}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
                 autoFocus
               />

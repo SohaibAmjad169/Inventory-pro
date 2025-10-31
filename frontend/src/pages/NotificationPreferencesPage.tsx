@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Layout } from '../components/Layout';
 import { notificationsAPI, NotificationPreferences } from '../api/notifications';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const NotificationPreferencesPage = () => {
   const [preferences, setPreferences] = useState<NotificationPreferences | null>(null);
@@ -52,7 +53,7 @@ export const NotificationPreferencesPage = () => {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-slate-600">Loading preferences...</p>
+            <SmartText tag="p" className="text-slate-600">Loading preferences...</SmartText>
           </div>
         </div>
       </Layout>
@@ -64,8 +65,8 @@ export const NotificationPreferencesPage = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down">
-          <h1 className="text-3xl font-bold gradient-text mb-2">⚙️ Notification Settings</h1>
-          <p className="text-slate-600 text-sm">Manage your notification preferences</p>
+          <SmartText tag="h1" className="text-3xl font-bold gradient-text mb-2">⚙️ Notification Settings</SmartText>
+          <SmartText tag="p" className="text-slate-600 text-sm">Manage your notification preferences</SmartText>
         </div>
 
         {/* Success Message */}
@@ -77,7 +78,7 @@ export const NotificationPreferencesPage = () => {
 
         {/* Channels */}
         <div className="glass rounded-3xl p-6 shadow-xl">
-          <h2 className="text-xl font-bold text-slate-800 mb-4">📡 Notification Channels</h2>
+          <SmartText tag="h2" className="text-xl font-bold text-slate-800 mb-4">📡 Notification Channels</SmartText>
           <div className="space-y-4">
             {[
               { key: 'enable_in_app', label: 'In-App Notifications', icon: '💻', description: 'Show notifications in the application' },
@@ -106,7 +107,7 @@ export const NotificationPreferencesPage = () => {
 
         {/* Notification Types */}
         <div className="glass rounded-3xl p-6 shadow-xl">
-          <h2 className="text-xl font-bold text-slate-800 mb-4">📋 Notification Types</h2>
+          <SmartText tag="h2" className="text-xl font-bold text-slate-800 mb-4">📋 Notification Types</SmartText>
           <div className="space-y-4">
             {[
               { key: 'stock_alerts', label: 'Stock Alerts', icon: '📦', description: 'Low stock, out of stock, reorder notifications' },
@@ -135,11 +136,11 @@ export const NotificationPreferencesPage = () => {
 
         {/* Quiet Hours */}
         <div className="glass rounded-3xl p-6 shadow-xl">
-          <h2 className="text-xl font-bold text-slate-800 mb-4">🌙 Quiet Hours</h2>
-          <p className="text-sm text-slate-600 mb-4">Mute notifications during specific hours</p>
+          <SmartText tag="h2" className="text-xl font-bold text-slate-800 mb-4">🌙 Quiet Hours</SmartText>
+          <SmartText tag="p" className="text-sm text-slate-600 mb-4">Mute notifications during specific hours</SmartText>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Start Time</label>
+              <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Start Time</SmartText>
               <select
                 value={preferences.quiet_hours_start ?? ''}
                 onChange={(e) => updatePreference('quiet_hours_start', e.target.value ? parseInt(e.target.value) : null)}
@@ -154,7 +155,7 @@ export const NotificationPreferencesPage = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">End Time</label>
+              <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">End Time</SmartText>
               <select
                 value={preferences.quiet_hours_end ?? ''}
                 onChange={(e) => updatePreference('quiet_hours_end', e.target.value ? parseInt(e.target.value) : null)}
@@ -173,11 +174,11 @@ export const NotificationPreferencesPage = () => {
 
         {/* Daily Digest */}
         <div className="glass rounded-3xl p-6 shadow-xl">
-          <h2 className="text-xl font-bold text-slate-800 mb-4">📬 Daily Digest</h2>
+          <SmartText tag="h2" className="text-xl font-bold text-slate-800 mb-4">📬 Daily Digest</SmartText>
           <label className="flex items-center justify-between p-4 bg-white rounded-xl hover:bg-slate-50 cursor-pointer mb-4">
             <div>
-              <p className="font-semibold text-slate-800">Enable Daily Digest</p>
-              <p className="text-sm text-slate-500">Receive a summary of notifications once per day</p>
+              <SmartText tag="p" className="font-semibold text-slate-800">Enable Daily Digest</SmartText>
+              <SmartText tag="p" className="text-sm text-slate-500">Receive a summary of notifications once per day</SmartText>
             </div>
             <input
               type="checkbox"
@@ -189,7 +190,7 @@ export const NotificationPreferencesPage = () => {
 
           {preferences.daily_digest && (
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Digest Time</label>
+              <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Digest Time</SmartText>
               <select
                 value={preferences.digest_time ?? 9}
                 onChange={(e) => updatePreference('digest_time', parseInt(e.target.value))}
@@ -214,13 +215,9 @@ export const NotificationPreferencesPage = () => {
           >
             {isSaving ? 'Saving...' : 'Save Preferences'}
           </button>
-          <button
-            onClick={loadPreferences}
+          <button onClick={loadPreferences}
             className="btn-secondary px-8"
-            disabled={isSaving}
-          >
-            Reset
-          </button>
+            disabled={isSaving}><SmartText>Reset</SmartText></button>
         </div>
       </div>
     </Layout>

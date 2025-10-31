@@ -86,6 +86,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onEscapePressed: (callback: () => void) => {
     ipcRenderer.on('escape-pressed', () => callback());
   },
+
+  // Language synchronization
+  setLanguage: (language: 'en' | 'ar') => ipcRenderer.invoke('set-language', language),
+  getLanguage: () => ipcRenderer.invoke('get-language'),
 });
 
 // Type definitions for TypeScript
@@ -132,6 +136,10 @@ declare global {
       onTriggerPrint: (callback: () => void) => void;
       onNewTransaction: (callback: () => void) => void;
       onEscapePressed: (callback: () => void) => void;
+      
+      // Language synchronization
+      setLanguage: (language: 'en' | 'ar') => Promise<boolean>;
+      getLanguage: () => Promise<'en' | 'ar'>;
     };
   }
 }

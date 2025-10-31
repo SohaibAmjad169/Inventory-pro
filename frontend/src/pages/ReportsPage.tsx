@@ -2,8 +2,13 @@ import { useState } from 'react';
 import { Layout } from '../components/Layout';
 import { useTranslation } from '../i18n/i18nContext';
 import { professionalPOSAPI } from '../api/professional-pos';
+import { useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const ReportsPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Enter POS session ID');
+
+
   const { t } = useTranslation();
   const [reportType, setReportType] = useState<'z' | 'x' | 'top-items' | 'sales-by-hour'>('z');
   const [sessionId, setSessionId] = useState('');
@@ -55,7 +60,7 @@ export const ReportsPage = () => {
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">{t.reports.title}</h1>
-          <p className="text-gray-600 mt-2">Generate various sales and operational reports</p>
+          <p className="text-gray-600 mt-2">{t.reports.generateReport}</p>
         </div>
 
         {/* Report Type Selector */}
@@ -87,7 +92,7 @@ export const ReportsPage = () => {
                   type="text"
                   value={sessionId}
                   onChange={(e) => setSessionId(e.target.value)}
-                  placeholder="Enter POS session ID"
+                  placeholder={placeholder1}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>

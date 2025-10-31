@@ -4,6 +4,7 @@ import { Layout } from '../components/Layout';
 import { useAuthStore } from '../store/authStore';
 import { Product } from '../types';
 import { productsAPI } from '../api/products';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -139,7 +140,7 @@ export const ProductDetailPage = () => {
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="inline-block w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-            <p className="mt-4 text-slate-600 font-medium">Loading product...</p>
+            <SmartText tag="p" className="mt-4 text-slate-600 font-medium">Loading product...</SmartText>
           </div>
         </div>
       </Layout>
@@ -219,7 +220,7 @@ export const ProductDetailPage = () => {
           {/* Product Images */}
           <div className="lg:col-span-1">
             <div className="glass rounded-3xl p-6 shadow-xl animate-slide-up" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
-              <h3 className="text-lg font-bold text-slate-800 mb-4">Product Images</h3>
+              <SmartText tag="h3" className="text-lg font-bold text-slate-800 mb-4">Product Images</SmartText>
               {product.images && product.images.length > 0 ? (
                 <div className="space-y-4">
                   <img
@@ -254,13 +255,13 @@ export const ProductDetailPage = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Info */}
             <div className="glass rounded-3xl p-8 shadow-xl animate-slide-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-              <h2 className="text-2xl font-bold text-slate-800 mb-6">Product Information</h2>
+              <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Product Information</SmartText>
               
               {isEditMode ? (
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Product Name *</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Product Name *</SmartText>
                       <input
                         type="text"
                         value={editForm.name}
@@ -270,7 +271,7 @@ export const ProductDetailPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">SKU *</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">SKU *</SmartText>
                       <input
                         type="text"
                         value={editForm.sku}
@@ -280,7 +281,7 @@ export const ProductDetailPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Barcode</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Barcode</SmartText>
                       <input
                         type="text"
                         value={editForm.barcode}
@@ -290,7 +291,7 @@ export const ProductDetailPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Brand</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Brand</SmartText>
                       <input
                         type="text"
                         value={editForm.brand}
@@ -300,7 +301,7 @@ export const ProductDetailPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Category ID</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Category ID</SmartText>
                       <input
                         type="text"
                         value={editForm.category_id}
@@ -310,7 +311,7 @@ export const ProductDetailPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Unit of Measure</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Unit of Measure</SmartText>
                       <select
                         value={editForm.uom}
                         onChange={(e) => setEditForm({...editForm, uom: e.target.value})}
@@ -326,7 +327,7 @@ export const ProductDetailPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Description</label>
+                    <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Description</SmartText>
                     <textarea
                       value={editForm.description}
                       onChange={(e) => setEditForm({...editForm, description: e.target.value})}
@@ -343,28 +344,26 @@ export const ProductDetailPage = () => {
                       onChange={(e) => setEditForm({...editForm, is_active: e.target.checked})}
                       className="w-5 h-5 text-primary-600 rounded focus:ring-2 focus:ring-primary-500"
                     />
-                    <label htmlFor="is_active" className="text-sm font-semibold text-slate-700 cursor-pointer">
-                      Product is active
-                    </label>
+                    <label htmlFor="is_active" className="text-sm font-semibold text-slate-700 cursor-pointer"><SmartText>Product is active</SmartText></label>
                   </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <div className="text-sm font-semibold text-slate-600 mb-2">SKU</div>
+                    <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">SKU</SmartText>
                     <div className="text-slate-800 font-mono bg-slate-100 px-4 py-2 rounded-lg">{product.sku}</div>
                   </div>
 
                   {product.barcode && (
                     <div>
-                      <div className="text-sm font-semibold text-slate-600 mb-2">Barcode</div>
+                      <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Barcode</SmartText>
                       <div className="text-slate-800 font-mono bg-slate-100 px-4 py-2 rounded-lg">{product.barcode}</div>
                     </div>
                   )}
 
                   {product.brand && (
                     <div>
-                      <div className="text-sm font-semibold text-slate-600 mb-2">Brand</div>
+                      <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Brand</SmartText>
                       <div className="text-slate-800">
                         <span className="inline-block px-4 py-2 bg-gradient-to-r from-accent-500 to-accent-600 text-white font-semibold rounded-lg shadow-lg">
                           {product.brand}
@@ -375,7 +374,7 @@ export const ProductDetailPage = () => {
 
                   {product.category && (
                     <div>
-                      <div className="text-sm font-semibold text-slate-600 mb-2">Category</div>
+                      <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Category</SmartText>
                       <div className="text-slate-800">
                         <span className="inline-block px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold rounded-lg shadow-lg">
                           {product.category}
@@ -385,25 +384,19 @@ export const ProductDetailPage = () => {
                   )}
 
                   <div>
-                    <div className="text-sm font-semibold text-slate-600 mb-2">Unit of Measure</div>
+                    <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Unit of Measure</SmartText>
                     <div className="text-slate-800 bg-slate-100 px-4 py-2 rounded-lg">{product.uom}</div>
                   </div>
 
                   <div>
-                    <div className="text-sm font-semibold text-slate-600 mb-2">Status</div>
+                    <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Status</SmartText>
                     <div>
                       {product.is_archived ? (
-                        <span className="inline-block px-4 py-2 bg-red-100 text-red-700 font-semibold rounded-lg">
-                          🗄️ Archived
-                        </span>
+                        <SmartText tag="span" className="inline-block px-4 py-2 bg-red-100 text-red-700 font-semibold rounded-lg">🗄️ Archived</SmartText>
                       ) : product.is_active ? (
-                        <span className="inline-block px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">
-                          ✓ Active
-                        </span>
+                        <SmartText tag="span" className="inline-block px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">✓ Active</SmartText>
                       ) : (
-                        <span className="inline-block px-4 py-2 bg-yellow-100 text-yellow-700 font-semibold rounded-lg">
-                          ⚠ Inactive
-                        </span>
+                        <SmartText tag="span" className="inline-block px-4 py-2 bg-yellow-100 text-yellow-700 font-semibold rounded-lg">⚠ Inactive</SmartText>
                       )}
                     </div>
                   </div>
@@ -412,7 +405,7 @@ export const ProductDetailPage = () => {
 
               {!isEditMode && product.description && (
                 <div className="mt-6 pt-6 border-t border-slate-200">
-                  <div className="text-sm font-semibold text-slate-600 mb-2">Description</div>
+                  <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Description</SmartText>
                   <div className="text-slate-700 leading-relaxed">{product.description}</div>
                 </div>
               )}
@@ -420,13 +413,13 @@ export const ProductDetailPage = () => {
 
             {/* Pricing */}
             <div className="glass rounded-3xl p-8 shadow-xl animate-slide-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-              <h2 className="text-2xl font-bold text-slate-800 mb-6">Pricing</h2>
+              <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Pricing</SmartText>
               
               {isEditMode ? (
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Selling Price *</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Selling Price *</SmartText>
                       <div className="relative">
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">$</span>
                         <input
@@ -440,7 +433,7 @@ export const ProductDetailPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Cost Price</label>
+                      <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Cost Price</SmartText>
                       <div className="relative">
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">$</span>
                         <input
@@ -457,7 +450,7 @@ export const ProductDetailPage = () => {
                   {editForm.cost > 0 && editForm.price > 0 && (
                     <div className="p-4 glass rounded-xl">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-slate-700">Profit Margin:</span>
+                        <SmartText tag="span" className="text-sm font-medium text-slate-700">Profit Margin:</SmartText>
                         <span className="text-lg font-bold text-green-600">
                           {(((editForm.price - editForm.cost) / editForm.price) * 100).toFixed(1)}%
                         </span>
@@ -468,14 +461,14 @@ export const ProductDetailPage = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl border-2 border-primary-200">
-                    <div className="text-sm font-semibold text-slate-600 mb-2">Selling Price</div>
+                    <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Selling Price</SmartText>
                     <div className="text-4xl font-bold text-primary-600">{formatPrice(Number(product.price))}</div>
                     <div className="text-xs text-slate-500 mt-1">per {product.uom}</div>
                   </div>
 
                   {product.cost && (
                     <div className="p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border-2 border-slate-200">
-                      <div className="text-sm font-semibold text-slate-600 mb-2">Cost Price</div>
+                      <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-2">Cost Price</SmartText>
                       <div className="text-4xl font-bold text-slate-700">{formatPrice(Number(product.cost))}</div>
                       <div className="text-xs text-green-600 mt-1 font-semibold">
                         Margin: {(((Number(product.price) - Number(product.cost)) / Number(product.price)) * 100).toFixed(1)}%
@@ -489,18 +482,18 @@ export const ProductDetailPage = () => {
             {/* Metadata */}
             {!isEditMode && (
               <div className="glass rounded-3xl p-8 shadow-xl animate-slide-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
-                <h2 className="text-2xl font-bold text-slate-800 mb-6">Metadata</h2>
+                <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Metadata</SmartText>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <div className="text-sm font-semibold text-slate-600 mb-1">Created By</div>
+                    <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-1">Created By</SmartText>
                     <div className="text-slate-800">{product.created_by?.display_name || 'Unknown'}</div>
                     <div className="text-xs text-slate-500">{formatDate(product.created_at)}</div>
                   </div>
 
                   {product.updated_by && (
                     <div>
-                      <div className="text-sm font-semibold text-slate-600 mb-1">Last Updated By</div>
+                      <SmartText tag="div" className="text-sm font-semibold text-slate-600 mb-1">Last Updated By</SmartText>
                       <div className="text-slate-800">{product.updated_by.display_name}</div>
                       <div className="text-xs text-slate-500">{formatDate(product.updated_at)}</div>
                     </div>

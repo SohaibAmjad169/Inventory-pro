@@ -5,8 +5,13 @@ import { useTranslation } from '../i18n/i18nContext';
 import { PurchaseOrder, POStatus, Supplier, Product, UserRole } from '../types';
 import { inventoryAPI } from '../api/inventory';
 import { productsAPI } from '../api/products';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const PurchaseOrdersPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Optional notes...');
+
+
   const { user } = useAuthStore();
   const { t } = useTranslation();
   const [purchaseOrders, setPurchaseOrders] = useState<PurchaseOrder[]>([]);
@@ -163,7 +168,7 @@ export const PurchaseOrdersPage = () => {
               <svg className="w-5 h-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              New Purchase Order
+              {t.purchaseOrders.addPurchaseOrder}
             </button>
           )}
         </div>
@@ -171,19 +176,15 @@ export const PurchaseOrdersPage = () => {
         {/* Filter */}
         <div className="glass rounded-2xl p-4 shadow-lg">
           <div className="flex gap-4 items-center">
-            <label className="text-sm font-semibold text-slate-700">Status:</label>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as POStatus | '')}
-              className="input-field flex-1 max-w-xs"
-            >
-              <option value="">All Status</option>
-              <option value={POStatus.DRAFT}>Draft</option>
-              <option value={POStatus.SUBMITTED}>Submitted</option>
-              <option value={POStatus.APPROVED}>Approved</option>
-              <option value={POStatus.PARTIALLY_RECEIVED}>Partially Received</option>
-              <option value={POStatus.RECEIVED}>Received</option>
-              <option value={POStatus.CANCELLED}>Cancelled</option>
+            <label className="text-sm font-semibold text-slate-700">{t.common.status}:</label>
+                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as POStatus | '')} className="px-4 py-2 rounded-xl border border-slate-200 glass">
+              <option value=""><SmartText>All Status</SmartText></option>
+              <option value={POStatus.DRAFT}><SmartText>Draft</SmartText></option>
+              <option value={POStatus.SUBMITTED}><SmartText>Submitted</SmartText></option>
+              <option value={POStatus.APPROVED}><SmartText>Approved</SmartText></option>
+              <option value={POStatus.PARTIALLY_RECEIVED}><SmartText>Partially Received</SmartText></option>
+              <option value={POStatus.RECEIVED}><SmartText>Received</SmartText></option>
+              <option value={POStatus.CANCELLED}><SmartText>Cancelled</SmartText></option>
             </select>
           </div>
         </div>
@@ -193,14 +194,14 @@ export const PurchaseOrdersPage = () => {
           {isLoading ? (
             <div className="p-12 text-center glass rounded-3xl">
               <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-slate-600">Loading purchase orders...</p>
+              <SmartText tag="p" className="mt-4 text-slate-600">Loading purchase orders...</SmartText>
             </div>
           ) : purchaseOrders.length === 0 ? (
             <div className="p-12 text-center glass rounded-3xl">
-              <p className="text-slate-600 mb-4">No purchase orders found</p>
+              <SmartText tag="p" className="text-slate-600 mb-4">No purchase orders found</SmartText>
               {canCreate && (
                 <button onClick={() => setShowModal(true)} className="btn-primary">
-                  Create First Purchase Order
+                  <SmartText>Create First Purchase Order</SmartText>
                 </button>
               )}
             </div>
@@ -238,7 +239,7 @@ export const PurchaseOrdersPage = () => {
 
                 {po.notes && (
                   <div className="mb-4 p-3 glass rounded-lg">
-                    <div className="text-xs font-semibold text-slate-600 mb-1">Notes:</div>
+                    <SmartText tag="div" className="text-xs font-semibold text-slate-600 mb-1">Notes:</SmartText>
                     <div className="text-sm text-slate-700">{po.notes}</div>
                   </div>
                 )}
@@ -259,9 +260,7 @@ export const PurchaseOrdersPage = () => {
 
                 {po.status === POStatus.APPROVED && (
                   <div className="glass rounded-lg p-3 bg-blue-50/50 border border-blue-200">
-                    <p className="text-sm text-blue-800">
-                      ✓ Approved - Ready to receive goods via GRN
-                    </p>
+                    <SmartText tag="p" className="text-sm text-blue-800">✓ Approved - Ready to receive goods via GRN</SmartText>
                   </div>
                 )}
               </div>
@@ -274,19 +273,19 @@ export const PurchaseOrdersPage = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in p-4">
           <div className="glass rounded-3xl p-8 max-w-4xl w-full shadow-2xl animate-scale-in max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">{t.inventory.createPurchaseOrder || 'Create Purchase Order'}</h2>
+            <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Create Purchase Order</SmartText>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Supplier & Date */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Supplier *</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Supplier *</SmartText>
                   <select
                     value={formData.supplier_id}
                     onChange={(e) => setFormData({ ...formData, supplier_id: e.target.value })}
                     required
                     className="input-field"
                   >
-                    <option value="">Select Supplier...</option>
+                    <option value=""><SmartText>Select Supplier...</SmartText></option>
                     {suppliers.map(s => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
@@ -294,7 +293,7 @@ export const PurchaseOrdersPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Expected Date</label>
+                  <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Expected Date</SmartText>
                   <input
                     type="date"
                     value={formData.expected_date}
@@ -307,10 +306,8 @@ export const PurchaseOrdersPage = () => {
               {/* Items */}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-bold text-slate-800">Items</h3>
-                  <button type="button" onClick={handleAddItem} className="btn-secondary text-sm">
-                    + Add Item
-                  </button>
+                  <SmartText tag="h3" className="text-lg font-bold text-slate-800">Items</SmartText>
+                  <button type="button" onClick={handleAddItem} className="btn-secondary text-sm"><SmartText>+ Add Item</SmartText></button>
                 </div>
 
                 <div className="space-y-3">
@@ -318,14 +315,14 @@ export const PurchaseOrdersPage = () => {
                     <div key={index} className="glass rounded-lg p-4">
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                         <div className="md:col-span-2">
-                          <label className="block text-xs font-semibold text-slate-600 mb-1">Product</label>
+                          <SmartText tag="label" className="block text-xs font-semibold text-slate-600 mb-1">Product</SmartText>
                           <select
                             value={item.product_id}
                             onChange={(e) => handleItemChange(index, 'product_id', e.target.value)}
                             required
                             className="input-field text-sm"
                           >
-                            <option value="">Select...</option>
+                            <option value=""><SmartText>Select...</SmartText></option>
                             {products.map(p => (
                               <option key={p.id} value={p.id}>
                                 {p.name} ({p.sku}) - Stock: {p.stock_quantity}
@@ -335,7 +332,7 @@ export const PurchaseOrdersPage = () => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-slate-600 mb-1">Quantity</label>
+                          <SmartText tag="label" className="block text-xs font-semibold text-slate-600 mb-1">Quantity</SmartText>
                           <input
                             type="number"
                             value={item.quantity}
@@ -348,7 +345,7 @@ export const PurchaseOrdersPage = () => {
 
                         <div className="flex gap-2 items-end">
                           <div className="flex-1">
-                            <label className="block text-xs font-semibold text-slate-600 mb-1">Unit Price</label>
+                            <SmartText tag="label" className="block text-xs font-semibold text-slate-600 mb-1">Unit Price</SmartText>
                             <input
                               type="number"
                               step="0.01"
@@ -385,7 +382,7 @@ export const PurchaseOrdersPage = () => {
                 {/* Total */}
                 <div className="mt-4 p-4 glass rounded-xl bg-primary-50/30">
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-slate-800">Total Amount:</span>
+                    <SmartText tag="span" className="text-lg font-bold text-slate-800">Total Amount:</SmartText>
                     <span className="text-3xl font-bold text-primary-600">${Number(calculateTotal() || 0).toFixed(2)}</span>
                   </div>
                 </div>
@@ -393,23 +390,21 @@ export const PurchaseOrdersPage = () => {
 
               {/* Notes */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Notes</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Notes</SmartText>
                 <textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   className="input-field"
                   rows={2}
-                  placeholder="Optional notes..."
+                  placeholder={placeholder1}
                 />
               </div>
 
               {/* Actions */}
               <div className="flex gap-3 pt-4">
-                <button type="submit" className="btn-primary flex-1">
-                  Create Purchase Order
-                </button>
+                <button type="submit" className="btn-primary flex-1"><SmartText>Create Purchase Order</SmartText></button>
                 <button type="button" onClick={() => setShowModal(false)} className="btn-secondary px-8">
-                  Cancel
+                  <SmartText>Cancel</SmartText>
                 </button>
               </div>
             </form>

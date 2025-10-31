@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { chatbotAPI, ChatMessage } from '../api/chatbot';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const ChatbotWidget = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Ask me anything...');
+
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -132,8 +137,8 @@ Ask me anything!`,
                 </svg>
               </div>
               <div>
-                <h3 className="font-bold">AI Assistant</h3>
-                <p className="text-xs text-white/80">Inventory & POS Expert</p>
+                <SmartText tag="h3" className="font-bold">AI Assistant</SmartText>
+                <SmartText tag="p" className="text-xs text-white/80">Inventory & POS Expert</SmartText>
               </div>
             </div>
             <button
@@ -192,7 +197,7 @@ Ask me anything!`,
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask me anything..."
+                placeholder={placeholder1}
                 disabled={isTyping}
                 className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
               />
@@ -206,9 +211,7 @@ Ask me anything!`,
                 </svg>
               </button>
             </div>
-            <p className="text-xs text-slate-400 mt-2">
-              Powered by AI • Press Enter to send
-            </p>
+            <SmartText tag="p" className="text-xs text-slate-400 mt-2">Powered by AI • Press Enter to send</SmartText>
           </div>
         </div>
       )}

@@ -6,6 +6,7 @@
 import { app, Tray, Menu, nativeImage, BrowserWindow } from 'electron';
 import path from 'path';
 import config from './config';
+import { getTranslations } from './i18n';
 
 let tray: Tray | null = null;
 
@@ -84,6 +85,8 @@ export function createTray(mainWindow: BrowserWindow | null): Tray {
 export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
   if (!tray) return;
 
+  const t = getTranslations();
+
   const contextMenu = Menu.buildFromTemplate([
     {
       label: config.app.name,
@@ -93,7 +96,7 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
       type: 'separator',
     },
     {
-      label: mainWindow?.isVisible() ? 'Hide Window' : 'Show Window',
+      label: mainWindow?.isVisible() ? t.tray.hideWindow : t.tray.showWindow,
       click: () => {
         if (mainWindow) {
           if (mainWindow.isVisible()) {
@@ -106,7 +109,7 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
       },
     },
     {
-      label: 'Dashboard',
+      label: t.tray.dashboard,
       click: () => {
         if (mainWindow) {
           mainWindow.show();
@@ -116,7 +119,7 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
       },
     },
     {
-      label: 'POS',
+      label: t.tray.pos,
       click: () => {
         if (mainWindow) {
           mainWindow.show();
@@ -129,10 +132,10 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
       type: 'separator',
     },
     {
-      label: 'Notifications',
+      label: t.tray.notifications,
       submenu: [
         {
-          label: 'Show All Notifications',
+          label: t.tray.showAllNotifications,
           click: () => {
             if (mainWindow) {
               mainWindow.show();
@@ -145,7 +148,7 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
           type: 'separator',
         },
         {
-          label: 'Enable Notifications',
+          label: t.tray.enableNotifications,
           type: 'checkbox',
           checked: true,
           click: (menuItem) => {
@@ -158,7 +161,7 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
       type: 'separator',
     },
     {
-      label: 'About',
+      label: t.tray.about,
       click: () => {
         if (mainWindow) {
           mainWindow.webContents.send('show-about');
@@ -169,7 +172,7 @@ export function updateTrayMenu(mainWindow: BrowserWindow | null): void {
       type: 'separator',
     },
     {
-      label: 'Quit',
+      label: t.tray.quit,
       click: () => {
         app.quit();
       },

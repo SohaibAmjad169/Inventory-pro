@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { notificationsAPI, Notification } from '../api/notifications';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const NotificationsPage = () => {
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ export const NotificationsPage = () => {
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold gradient-text mb-2">🔔 Notifications</h1>
+              <SmartText tag="h1" className="text-3xl font-bold gradient-text mb-2">🔔 Notifications</SmartText>
               <p className="text-slate-600 text-sm">
                 {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
               </p>
@@ -129,9 +130,7 @@ export const NotificationsPage = () => {
                 Settings
               </button>
               {unreadCount > 0 && (
-                <button onClick={handleMarkAllAsRead} className="btn-primary text-sm">
-                  Mark All Read
-                </button>
+                <button onClick={handleMarkAllAsRead} className="btn-primary text-sm"><SmartText>Mark All Read</SmartText></button>
               )}
             </div>
           </div>
@@ -172,7 +171,7 @@ export const NotificationsPage = () => {
           {isLoading ? (
             <div className="glass rounded-3xl p-12 text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-primary-600 mx-auto mb-4"></div>
-              <p className="text-slate-600">Loading notifications...</p>
+              <SmartText tag="p" className="text-slate-600">Loading notifications...</SmartText>
             </div>
           ) : notifications.length === 0 ? (
             <div className="glass rounded-3xl p-12 text-center">
@@ -184,8 +183,8 @@ export const NotificationsPage = () => {
                   d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
                 />
               </svg>
-              <p className="text-xl font-semibold text-slate-700 mb-2">No notifications</p>
-              <p className="text-slate-500">You're all caught up! 🎉</p>
+              <SmartText tag="p" className="text-xl font-semibold text-slate-700 mb-2">No notifications</SmartText>
+              <SmartText tag="p" className="text-slate-500">You're all caught up! 🎉</SmartText>
             </div>
           ) : (
             notifications.map((notification) => (
@@ -209,9 +208,7 @@ export const NotificationsPage = () => {
                         {notification.title}
                       </h3>
                       {!notification.is_read && (
-                        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                          NEW
-                        </span>
+                        <SmartText tag="span" className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-semibold">NEW</SmartText>
                       )}
                     </div>
 
@@ -224,13 +221,13 @@ export const NotificationsPage = () => {
                         <div className="grid grid-cols-2 gap-2">
                           {notification.metadata.product_sku && (
                             <div>
-                              <span className="text-slate-500">SKU:</span>
+                              <SmartText tag="span" className="text-slate-500">SKU:</SmartText>
                               <span className="ml-2 font-medium">{notification.metadata.product_sku}</span>
                             </div>
                           )}
                           {notification.metadata.current_stock !== undefined && (
                             <div>
-                              <span className="text-slate-500">Current Stock:</span>
+                              <SmartText tag="span" className="text-slate-500">Current Stock:</SmartText>
                               <span className="ml-2 font-medium text-red-600">
                                 {notification.metadata.current_stock} units
                               </span>
@@ -238,7 +235,7 @@ export const NotificationsPage = () => {
                           )}
                           {notification.metadata.reorder_level !== undefined && (
                             <div>
-                              <span className="text-slate-500">Reorder Level:</span>
+                              <SmartText tag="span" className="text-slate-500">Reorder Level:</SmartText>
                               <span className="ml-2 font-medium">{notification.metadata.reorder_level} units</span>
                             </div>
                           )}

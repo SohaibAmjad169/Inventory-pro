@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Layout } from '../components/Layout';
 import { useTranslation } from '../i18n/i18nContext';
 import { printSettingsAPI, PrintSettings } from '../api/print-settings';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const PrintSettingsPage = () => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export const PrintSettingsPage = () => {
       const data = await printSettingsAPI.getPrintSettings();
       setSettings(data);
     } catch (err: any) {
-      setError('Failed to load print settings');
+      setError(t.common.error);
     } finally {
       setIsLoading(false);
     }
@@ -34,10 +35,10 @@ export const PrintSettingsPage = () => {
     setSuccess('');
     try {
       await printSettingsAPI.updatePrintSettings(settings.id, settings);
-      setSuccess('Settings saved successfully!');
+      setSuccess(t.common.success);
       setTimeout(() => setSuccess(''), 3000);
     } catch (err: any) {
-      setError('Failed to save settings');
+      setError(t.common.error);
     } finally {
       setIsSaving(false);
     }
@@ -57,7 +58,7 @@ export const PrintSettingsPage = () => {
     return (
       <Layout>
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          No print settings found. Please contact administrator.
+          {t.common.error}
         </div>
       </Layout>
     );
@@ -69,7 +70,7 @@ export const PrintSettingsPage = () => {
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">{t.printSettingsConfig.printSettings}</h1>
-          <p className="text-gray-600 mt-2">Configure receipt printing and business information</p>
+          <p className="text-gray-600 mt-2">{t.printSettingsConfig.businessInformation}</p>
         </div>
 
         {success && (
@@ -101,7 +102,7 @@ export const PrintSettingsPage = () => {
                   value={settings.business_name}
                   onChange={(e) => setSettings({ ...settings, business_name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Your Business Name"
+                  placeholder={t.printSettingsConfig.businessName}
                 />
               </div>
               <div>
@@ -111,7 +112,7 @@ export const PrintSettingsPage = () => {
                   value={settings.business_phone || ''}
                   onChange={(e) => setSettings({ ...settings, business_phone: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder={t.printSettingsConfig.businessPhone}
                 />
               </div>
               <div>
@@ -121,7 +122,7 @@ export const PrintSettingsPage = () => {
                   value={settings.business_email || ''}
                   onChange={(e) => setSettings({ ...settings, business_email: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="info@yourbusiness.com"
+                  placeholder={t.printSettingsConfig.businessEmail}
                 />
               </div>
               <div>
@@ -131,7 +132,7 @@ export const PrintSettingsPage = () => {
                   value={settings.tax_id || ''}
                   onChange={(e) => setSettings({ ...settings, tax_id: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="TAX-123456789"
+                  placeholder={t.printSettingsConfig.taxId}
                 />
               </div>
               <div className="md:col-span-2">
@@ -141,7 +142,7 @@ export const PrintSettingsPage = () => {
                   onChange={(e) => setSettings({ ...settings, business_address: e.target.value })}
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="123 Main Street&#10;City, State 12345"
+                  placeholder={t.printSettingsConfig.businessAddress}
                 />
               </div>
             </div>
@@ -163,7 +164,7 @@ export const PrintSettingsPage = () => {
                   onChange={(e) => setSettings({ ...settings, header_text: e.target.value })}
                   rows={2}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Thank you for shopping with us!"
+                  placeholder={t.printSettingsConfig.headerText}
                 />
               </div>
               <div>
@@ -173,7 +174,7 @@ export const PrintSettingsPage = () => {
                   onChange={(e) => setSettings({ ...settings, footer_text: e.target.value })}
                   rows={2}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Please visit again!"
+                  placeholder={t.printSettingsConfig.footerText}
                 />
               </div>
               <div>
@@ -183,7 +184,7 @@ export const PrintSettingsPage = () => {
                   onChange={(e) => setSettings({ ...settings, return_policy: e.target.value })}
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Returns accepted within 30 days with receipt."
+                  placeholder={t.printSettingsConfig.returnPolicy}
                 />
               </div>
             </div>
@@ -208,7 +209,7 @@ export const PrintSettingsPage = () => {
                 />
                 <div>
                   <div className="text-sm font-medium text-gray-700">{t.printSettingsConfig.printQrCode}</div>
-                  <div className="text-xs text-gray-500">Enables customers to access digital receipt</div>
+                  <SmartText tag="div" className="text-xs text-gray-500">Enables customers to access digital receipt</SmartText>
                 </div>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
@@ -220,7 +221,7 @@ export const PrintSettingsPage = () => {
                 />
                 <div>
                   <div className="text-sm font-medium text-gray-700">{t.printSettingsConfig.printBarcode}</div>
-                  <div className="text-xs text-gray-500">Print transaction number as barcode</div>
+                  <SmartText tag="div" className="text-xs text-gray-500">Print transaction number as barcode</SmartText>
                 </div>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
@@ -232,7 +233,7 @@ export const PrintSettingsPage = () => {
                 />
                 <div>
                   <div className="text-sm font-medium text-gray-700">{t.printSettingsConfig.showTaxBreakdown}</div>
-                  <div className="text-xs text-gray-500">Display detailed tax information</div>
+                  <SmartText tag="div" className="text-xs text-gray-500">Display detailed tax information</SmartText>
                 </div>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
@@ -244,7 +245,7 @@ export const PrintSettingsPage = () => {
                 />
                 <div>
                   <div className="text-sm font-medium text-gray-700">{t.printSettingsConfig.showCashierName}</div>
-                  <div className="text-xs text-gray-500">Display cashier name on receipt</div>
+                  <SmartText tag="div" className="text-xs text-gray-500">Display cashier name on receipt</SmartText>
                 </div>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
@@ -256,7 +257,7 @@ export const PrintSettingsPage = () => {
                 />
                 <div>
                   <div className="text-sm font-medium text-gray-700">{t.printSettingsConfig.showCustomerInfo}</div>
-                  <div className="text-xs text-gray-500">Display customer name if available</div>
+                  <SmartText tag="div" className="text-xs text-gray-500">Display customer name if available</SmartText>
                 </div>
               </label>
             </div>
@@ -304,7 +305,7 @@ export const PrintSettingsPage = () => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Saving...
+                  {t.common.loading}
                 </>
               ) : (
                 <>

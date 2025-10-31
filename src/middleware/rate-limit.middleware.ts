@@ -9,6 +9,7 @@ export const generalLimiter = rateLimit({
   max: config.rateLimit.maxRequests,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => config.env === 'development',
   handler: (_req, res) => {
     res.status(429).json({
       error: {
@@ -27,6 +28,7 @@ export const authLimiter = rateLimit({
   max: config.rateLimit.authMax,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => config.env === 'development',
   handler: (_req, res) => {
     res.status(429).json({
       error: {

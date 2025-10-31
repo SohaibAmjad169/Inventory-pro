@@ -5,8 +5,13 @@ import { useTranslation } from '../i18n/i18nContext';
 import { StockAdjustment, AdjustmentReason, AdjustmentStatus, UserRole, Product } from '../types';
 import { inventoryAPI } from '../api/inventory';
 import { productsAPI } from '../api/products';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const StockAdjustmentsPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Explain the reason for this adjustment...');
+
+
   const { user } = useAuthStore();
   const { t } = useTranslation();
   const [adjustments, setAdjustments] = useState<StockAdjustment[]>([]);
@@ -101,14 +106,14 @@ export const StockAdjustmentsPage = () => {
         <div className="glass rounded-3xl p-6 shadow-xl animate-slide-down flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold gradient-text mb-2">{t.nav.stockAdjustments}</h1>
-            <p className="text-slate-600 text-sm">Manual stock corrections with approval workflow</p>
+            <p className="text-slate-600 text-sm">{t.stockAdjustments.trackStockChanges}</p>
           </div>
           {canCreate && (
             <button onClick={() => setShowModal(true)} className="btn-primary">
               <svg className="w-5 h-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              New Adjustment
+              {t.stockAdjustments.addStockAdjustment}
             </button>
           )}
         </div>
@@ -116,7 +121,7 @@ export const StockAdjustmentsPage = () => {
         {/* Filter */}
         <div className="glass rounded-2xl p-4 shadow-lg">
           <div className="flex gap-4 items-center">
-            <label className="text-sm font-semibold text-slate-700">Status:</label>
+            <label className="text-sm font-semibold text-slate-700">{t.common.status}:</label>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as AdjustmentStatus | '')}
@@ -135,14 +140,14 @@ export const StockAdjustmentsPage = () => {
           {isLoading ? (
             <div className="p-12 text-center glass rounded-3xl">
               <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-slate-600">Loading adjustments...</p>
+              <p className="mt-4 text-slate-600">{t.messages.loading}</p>
             </div>
           ) : adjustments.length === 0 ? (
             <div className="p-12 text-center glass rounded-3xl">
-              <p className="text-slate-600 mb-4">No adjustments found</p>
+              <SmartText tag="p" className="text-slate-600 mb-4">No adjustments found</SmartText>
               {canCreate && (
                 <button onClick={() => setShowModal(true)} className="btn-primary">
-                  Create First Adjustment
+                  <SmartText>Create First Adjustment</SmartText>
                 </button>
               )}
             </div>
@@ -167,28 +172,28 @@ export const StockAdjustmentsPage = () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <div className="glass rounded-lg p-3">
-                    <div className="text-xs text-slate-600 mb-1">Old Quantity</div>
+                    <SmartText tag="div" className="text-xs text-slate-600 mb-1">Old Quantity</SmartText>
                     <div className="text-lg font-bold text-slate-800">{adj.old_quantity}</div>
                   </div>
                   <div className="glass rounded-lg p-3">
-                    <div className="text-xs text-slate-600 mb-1">New Quantity</div>
+                    <SmartText tag="div" className="text-xs text-slate-600 mb-1">New Quantity</SmartText>
                     <div className="text-lg font-bold text-primary-600">{adj.new_quantity}</div>
                   </div>
                   <div className="glass rounded-lg p-3">
-                    <div className="text-xs text-slate-600 mb-1">Difference</div>
+                    <SmartText tag="div" className="text-xs text-slate-600 mb-1">Difference</SmartText>
                     <div className={`text-lg font-bold ${adj.difference >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {adj.difference >= 0 ? '+' : ''}{adj.difference}
                     </div>
                   </div>
                   <div className="glass rounded-lg p-3">
-                    <div className="text-xs text-slate-600 mb-1">Reason</div>
+                    <SmartText tag="div" className="text-xs text-slate-600 mb-1">Reason</SmartText>
                     <div className="text-sm font-semibold text-slate-800">{getReasonDisplay(adj.reason)}</div>
                   </div>
                 </div>
 
                 {adj.notes && (
                   <div className="mb-4 p-3 glass rounded-lg">
-                    <div className="text-xs font-semibold text-slate-600 mb-1">Notes:</div>
+                    <SmartText tag="div" className="text-xs font-semibold text-slate-600 mb-1">Notes:</SmartText>
                     <div className="text-sm text-slate-700">{adj.notes}</div>
                   </div>
                 )}
@@ -224,10 +229,10 @@ export const StockAdjustmentsPage = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fade-in p-4">
           <div className="glass rounded-3xl p-8 max-w-xl w-full shadow-2xl animate-scale-in">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">Create Stock Adjustment</h2>
+            <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-6">Create Stock Adjustment</SmartText>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Product *</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Product *</SmartText>
                 <select
                   value={formData.product_id}
                   onChange={(e) => {
@@ -254,14 +259,14 @@ export const StockAdjustmentsPage = () => {
               {formData.product_id && (
                 <>
                   <div className="glass rounded-lg p-4">
-                    <div className="text-sm text-slate-600 mb-2">Current Stock:</div>
+                    <SmartText tag="div" className="text-sm text-slate-600 mb-2">Current Stock:</SmartText>
                     <div className="text-3xl font-bold text-slate-800">
                       {products.find(p => p.id === formData.product_id)?.stock_quantity || 0}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">New Quantity *</label>
+                    <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">New Quantity *</SmartText>
                     <input
                       type="number"
                       value={formData.new_quantity}
@@ -274,7 +279,7 @@ export const StockAdjustmentsPage = () => {
                   </div>
 
                   <div className="glass rounded-lg p-4">
-                    <div className="text-sm text-slate-600 mb-1">Difference:</div>
+                    <SmartText tag="div" className="text-sm text-slate-600 mb-1">Difference:</SmartText>
                     <div className={`text-2xl font-bold ${(formData.new_quantity - (products.find(p => p.id === formData.product_id)?.stock_quantity || 0)) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {(formData.new_quantity - (products.find(p => p.id === formData.product_id)?.stock_quantity || 0)) >= 0 ? '+' : ''}
                       {formData.new_quantity - (products.find(p => p.id === formData.product_id)?.stock_quantity || 0)}
@@ -284,7 +289,7 @@ export const StockAdjustmentsPage = () => {
               )}
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Reason *</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Reason *</SmartText>
                 <select
                   value={formData.reason}
                   onChange={(e) => setFormData({ ...formData, reason: e.target.value as AdjustmentReason })}
@@ -301,13 +306,13 @@ export const StockAdjustmentsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Notes</label>
+                <SmartText tag="label" className="block text-sm font-semibold text-slate-700 mb-2">Notes</SmartText>
                 <textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   className="input-field"
                   rows={3}
-                  placeholder="Explain the reason for this adjustment..."
+                  placeholder={placeholder1}
                 />
               </div>
 
@@ -317,16 +322,14 @@ export const StockAdjustmentsPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div className="text-sm text-blue-800">
-                    <p className="font-semibold mb-1">Approval Required:</p>
-                    <p>Stock adjustments require approval from Admin or Owner before stock is updated.</p>
+                    <SmartText tag="p" className="font-semibold mb-1">Approval Required:</SmartText>
+                    <SmartText tag="p">Stock adjustments require approval from Admin or Owner before stock is updated.</SmartText>
                   </div>
                 </div>
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button type="submit" className="btn-primary flex-1">
-                  Create Adjustment Request
-                </button>
+                <button type="submit" className="btn-primary flex-1"><SmartText>Create Adjustment Request</SmartText></button>
                 <button type="button" onClick={() => setShowModal(false)} className="btn-secondary px-8">
                   Cancel
                 </button>

@@ -4,6 +4,7 @@ import Store from 'electron-store';
 import config from './config';
 import { checkBackendHealth, checkFrontendAvailable, getConnectionStatus } from './utils';
 import { createTray, updateTrayMenu, destroyTray } from './tray';
+import { initializeI18n, setLanguage, Language } from './i18n';
 import {
   showNotification,
   showLowStockAlert,
@@ -291,6 +292,9 @@ app.whenReady().then(async () => {
   console.log(`🔗 Backend URL: ${config.backend.url}`);
   console.log(`📱 Frontend URL: ${config.env.isDevelopment ? config.frontend.devUrl : 'Production Build'}`);
 
+  // Initialize internationalization
+  initializeI18n();
+
   await createWindow();
 
   app.on('activate', async () => {
@@ -569,6 +573,20 @@ ipcMain.handle('check-for-updates', async () => {
 // Are notifications supported
 ipcMain.handle('are-notifications-supported', async () => {
   return areNotificationsSupported();
+});
+
+// Language synchronization
+ipcMain.handle('set-language', async (_event, language: Language) => {
+  setLanguage(language);
+  // Update tray menu with new language
+  if (mainWindow) {
+    updateTrayMenu(mainWindow);
+  }
+  return true;
+});
+
+ipcMain.handle('get-language', async () => {
+  return store.get('language', 'en');
 });
 
 console.log('✅ Phase 2 IPC handlers registered');

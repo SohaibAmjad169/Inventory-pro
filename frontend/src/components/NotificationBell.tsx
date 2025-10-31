@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { notificationsAPI, Notification } from '../api/notifications';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const NotificationBell = () => {
   const navigate = useNavigate();
@@ -166,7 +167,7 @@ export const NotificationBell = () => {
                       d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                     />
                   </svg>
-                  <h3 className="font-bold text-lg">Notifications</h3>
+                  <SmartText tag="h3" className="font-bold text-lg">Notifications</SmartText>
                   {unreadCount > 0 && (
                     <span className="bg-white text-primary-600 text-xs font-bold px-2 py-1 rounded-full">
                       {unreadCount}
@@ -185,12 +186,8 @@ export const NotificationBell = () => {
               
               {/* Actions */}
               {unreadCount > 0 && (
-                <button
-                  onClick={handleMarkAllAsRead}
-                  className="mt-2 text-sm text-white/90 hover:text-white hover:underline"
-                >
-                  Mark all as read
-                </button>
+                <button onClick={handleMarkAllAsRead}
+                  className="mt-2 text-sm text-white/90 hover:text-white hover:underline"><SmartText>Mark all as read</SmartText></button>
               )}
             </div>
 
@@ -199,7 +196,7 @@ export const NotificationBell = () => {
               {isLoading ? (
                 <div className="p-8 text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
-                  <p className="text-slate-500 mt-2 text-sm">Loading...</p>
+                  <SmartText tag="p" className="text-slate-500 mt-2 text-sm">Loading...</SmartText>
                 </div>
               ) : notifications.length === 0 ? (
                 <div className="p-8 text-center">
@@ -211,8 +208,8 @@ export const NotificationBell = () => {
                       d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
                     />
                   </svg>
-                  <p className="text-slate-500 font-medium">No notifications</p>
-                  <p className="text-slate-400 text-sm mt-1">You're all caught up!</p>
+                  <SmartText tag="p" className="text-slate-500 font-medium">No notifications</SmartText>
+                  <SmartText tag="p" className="text-slate-400 text-sm mt-1">You're all caught up!</SmartText>
                 </div>
               ) : (
                 <div className="divide-y divide-slate-200">

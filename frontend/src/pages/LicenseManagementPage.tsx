@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../i18n/i18nContext';
 import licensingAPI, { License, LicenseGenerationRequest } from '../api/licensing';
+import { SmartText } from '../i18n/smartTranslation';
 
 const LicenseManagementPage: React.FC = () => {
   const { t } = useTranslation();
@@ -250,9 +251,7 @@ const LicenseManagementPage: React.FC = () => {
                           </span>
                         )}
                         {trial.is_suspicious && (
-                          <span className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">
-                            🚨 Suspicious
-                          </span>
+                          <SmartText tag="span" className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">🚨 Suspicious</SmartText>
                         )}
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">

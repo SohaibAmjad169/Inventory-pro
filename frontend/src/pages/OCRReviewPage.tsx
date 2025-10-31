@@ -2,8 +2,15 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { ocrAPI, OCRScan, OCRProduct } from '../api/ocr';
+import { SmartText, useSmartPlaceholder } from '../i18n/smartTranslation';
 
 export const OCRReviewPage = () => {
+  // Smart placeholders
+  const placeholder1 = useSmartPlaceholder('Product Name');
+  const placeholder2 = useSmartPlaceholder('SKU');
+  const placeholder3 = useSmartPlaceholder('Price');
+
+
   const { scanId } = useParams<{ scanId: string }>();
   const navigate = useNavigate();
   const [scan, setScan] = useState<OCRScan | null>(null);
@@ -107,7 +114,7 @@ export const OCRReviewPage = () => {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-slate-600">Loading scan results...</p>
+            <SmartText tag="p" className="text-slate-600">Loading scan results...</SmartText>
           </div>
         </div>
       </Layout>
@@ -127,7 +134,7 @@ export const OCRReviewPage = () => {
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Error</h2>
+            <SmartText tag="h2" className="text-2xl font-bold text-slate-800 mb-2">Error</SmartText>
             <p className="text-slate-600 mb-6">{error || 'Scan not found'}</p>
             <button onClick={() => navigate('/ocr/scanner')} className="btn-primary">
               Back to Scanner
@@ -145,7 +152,7 @@ export const OCRReviewPage = () => {
         <div className="glass rounded-3xl p-6 shadow-xl">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold gradient-text mb-2">Review Extracted Products</h1>
+              <SmartText tag="h1" className="text-3xl font-bold gradient-text mb-2">Review Extracted Products</SmartText>
               <p className="text-slate-600 text-sm">
                 {scan.file_name} • {scan.products?.length || 0} products found • Confidence:{' '}
                 {scan.confidence_score?.toFixed(1)}%
@@ -185,7 +192,7 @@ export const OCRReviewPage = () => {
         {/* Products Table */}
         <div className="glass rounded-3xl p-6 shadow-xl">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-slate-800">Extracted Products</h2>
+            <SmartText tag="h2" className="text-xl font-bold text-slate-800">Extracted Products</SmartText>
             <div className="flex gap-3">
               <button
                 onClick={() => {
@@ -239,7 +246,7 @@ export const OCRReviewPage = () => {
                           value={editForm.name}
                           onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
                           className="w-full px-3 py-2 border border-slate-300 rounded-lg"
-                          placeholder="Product Name"
+                          placeholder={placeholder1}
                         />
                         <div className="grid grid-cols-2 gap-3">
                           <input
@@ -247,7 +254,7 @@ export const OCRReviewPage = () => {
                             value={editForm.sku}
                             onChange={(e) => setEditForm({ ...editForm, sku: e.target.value })}
                             className="px-3 py-2 border border-slate-300 rounded-lg"
-                            placeholder="SKU"
+                            placeholder={placeholder2}
                           />
                           <input
                             type="number"
@@ -255,7 +262,7 @@ export const OCRReviewPage = () => {
                             value={editForm.price}
                             onChange={(e) => setEditForm({ ...editForm, price: e.target.value })}
                             className="px-3 py-2 border border-slate-300 rounded-lg"
-                            placeholder="Price"
+                            placeholder={placeholder3}
                           />
                         </div>
                         <div className="flex gap-2">
@@ -281,9 +288,7 @@ export const OCRReviewPage = () => {
                             {product.corrected_name || product.name}
                           </h3>
                           {product.is_added_to_inventory && (
-                            <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
-                              ✓ Added
-                            </span>
+                            <SmartText tag="span" className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">✓ Added</SmartText>
                           )}
                           {product.confidence_score && (
                             <span className={`px-2 py-1 text-xs font-semibold rounded ${
@@ -297,21 +302,21 @@ export const OCRReviewPage = () => {
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
-                            <span className="text-slate-500">SKU:</span>
+                            <SmartText tag="span" className="text-slate-500">SKU:</SmartText>
                             <span className="ml-2 font-medium">{product.corrected_sku || product.sku || '-'}</span>
                           </div>
                           <div>
-                            <span className="text-slate-500">Price:</span>
+                            <SmartText tag="span" className="text-slate-500">Price:</SmartText>
                             <span className="ml-2 font-medium">
                               ${(product.corrected_price || product.unit_price || 0).toFixed(2)}
                             </span>
                           </div>
                           <div>
-                            <span className="text-slate-500">Qty:</span>
+                            <SmartText tag="span" className="text-slate-500">Qty:</SmartText>
                             <span className="ml-2 font-medium">{product.quantity || 1}</span>
                           </div>
                           <div>
-                            <span className="text-slate-500">Total:</span>
+                            <SmartText tag="span" className="text-slate-500">Total:</SmartText>
                             <span className="ml-2 font-medium">
                               ${(product.total_price || 0).toFixed(2)}
                             </span>

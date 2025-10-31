@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useAuthStore } from '../store/authStore';
+import { useTranslation } from '../i18n/i18nContext';
 import { User, UserRole } from '../types';
 import { usersAPI } from '../api/users';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const UsersPage = () => {
+  const { t } = useTranslation();
   const { permissions } = useAuthStore();
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +33,7 @@ export const UsersPage = () => {
       const response = await usersAPI.list(params);
       setUsers(response.data);
     } catch (err: any) {
-      setError(err.response?.data?.error?.message || 'Failed to load users');
+      setError(err.response?.data?.error?.message || t.messages.failedToLoadUsers);
     } finally {
       setIsLoading(false);
     }
@@ -38,26 +41,25 @@ export const UsersPage = () => {
 
   const handleToggleStatus = async (user: User) => {
     if (!permissions?.can_change_status) {
-      alert('You do not have permission to change user status');
+      alert(t.messages.permissionDenied);
       return;
     }
 
-    const confirm = window.confirm(
-      `Are you sure you want to ${user.is_active ? 'deactivate' : 'activate'} ${user.username}?`
-    );
-    if (!confirm) return;
-
-    try {
-      await usersAPI.updateStatus(user.id, !user.is_active);
-      loadUsers();
-    } catch (err: any) {
-      alert(err.response?.data?.error?.message || 'Failed to update user status');
+    if (confirm(
+      `${t.messages.confirmAction} ${user.is_active ? t.users.deactivate : t.users.activate} ${user.username}?`
+    )) {
+      try {
+        await usersAPI.updateStatus(user.id, !user.is_active);
+        loadUsers();
+      } catch (err: any) {
+        alert(err.response?.data?.error?.message || 'Error occurred');
+      }
     }
   };
 
   const handleDelete = async (user: User) => {
     if (!permissions?.can_delete_users) {
-      alert('You do not have permission to delete users');
+      alert('Permission denied');
       return;
     }
 
@@ -70,7 +72,7 @@ export const UsersPage = () => {
       await usersAPI.delete(user.id);
       loadUsers();
     } catch (err: any) {
-      alert(err.response?.data?.error?.message || 'Failed to delete user');
+      alert(err.response?.data?.error?.message || 'Error occurred');
     }
   };
 
@@ -92,8 +94,8 @@ export const UsersPage = () => {
         {/* Header */}
         <div className="glass rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-slide-down">
           <div>
-            <h1 className="text-3xl font-bold gradient-text">User Management</h1>
-            <p className="text-slate-600 text-sm mt-1">Manage system users and permissions</p>
+            <h1 className="text-3xl font-bold gradient-text">{t.users.userManagement}</h1>
+            <p className="text-slate-600 text-sm mt-1">{t.users.manageSystemUsers}</p>
           </div>
           {permissions?.can_create_users && (
             <Link
@@ -103,7 +105,7 @@ export const UsersPage = () => {
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              Create User
+              {t.users.createUser}
             </Link>
           )}
         </div>
@@ -113,7 +115,7 @@ export const UsersPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Search */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Search Users</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">{t.users.searchUsers}</label>
               <div className="relative">
                 <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -123,20 +125,20 @@ export const UsersPage = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="input-field pl-10"
-                  placeholder="Search by username, email, or name..."
+                  placeholder={t.users.searchPlaceholder}
                 />
               </div>
             </div>
 
             {/* Role Filter */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Role Filter</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">{t.users.roleFilter}</label>
               <select
                 value={filterRole}
                 onChange={(e) => setFilterRole(e.target.value as UserRole | '')}
                 className="input-field"
               >
-                <option value="">All Roles</option>
+                <option value="">{t.users.allRoles}</option>
                 {Object.values(UserRole).map(role => (
                   <option key={role} value={role}>
                     {role.replace(/_/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
@@ -147,15 +149,15 @@ export const UsersPage = () => {
 
             {/* Status Filter */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Status Filter</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">{t.users.statusFilter}</label>
               <select
                 value={filterActive === '' ? '' : filterActive ? 'true' : 'false'}
                 onChange={(e) => setFilterActive(e.target.value === '' ? '' : e.target.value === 'true')}
                 className="input-field"
               >
-                <option value="">All Status</option>
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
+                <option value="">{t.users.allStatuses}</option>
+                <option value="true">{t.users.active}</option>
+                <option value="false">{t.users.inactive}</option>
               </select>
             </div>
           </div>
@@ -166,11 +168,11 @@ export const UsersPage = () => {
           {isLoading ? (
             <div className="p-12 text-center">
               <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-slate-600">Loading users...</p>
+              <SmartText tag="p" className="mt-4 text-slate-600">Loading users...</SmartText>
             </div>
           ) : error ? (
             <div className="p-8 text-center">
-              <div className="inline-block w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -179,12 +181,12 @@ export const UsersPage = () => {
             </div>
           ) : users.length === 0 ? (
             <div className="p-12 text-center">
-              <div className="inline-block w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
-              <p className="text-slate-600">No users found</p>
+              <p className="text-slate-600">{t.users.noUsersFound}</p>
             </div>
           ) : (
             <div className="overflow-x-auto custom-scrollbar">

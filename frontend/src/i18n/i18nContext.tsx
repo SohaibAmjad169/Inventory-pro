@@ -1,6 +1,16 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Language, translations, Translations } from './translations';
 
+// Type guard for Electron environment
+declare global {
+  interface Window {
+    electronAPI?: {
+      setLanguage: (language: 'en' | 'ar') => Promise<boolean>;
+      getLanguage: () => Promise<'en' | 'ar'>;
+    };
+  }
+}
+
 interface I18nContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
@@ -31,6 +41,13 @@ export const I18nProvider = ({ children }: I18nProviderProps) => {
     
     // Update body direction for better RTL support
     document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    // Sync with Electron if available
+    if (window.electronAPI?.setLanguage) {
+      window.electronAPI.setLanguage(lang).catch((error: any) => {
+        console.warn('Failed to sync language with Electron:', error);
+      });
+    }
   };
 
   // Set initial direction on mount

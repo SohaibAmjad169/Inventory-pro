@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { useTranslation } from '../i18n/i18nContext';
 import { StockMovement, StockMovementType } from '../types';
 import { inventoryAPI } from '../api/inventory';
+import { SmartText } from '../i18n/smartTranslation';
 
 export const StockMovementsPage = () => {
   const { t } = useTranslation();
@@ -66,7 +67,7 @@ export const StockMovementsPage = () => {
         {/* Filter */}
         <div className="glass rounded-2xl p-4 shadow-lg">
           <div className="flex gap-4 items-center">
-            <label className="text-sm font-semibold text-slate-700">Movement Type:</label>
+            <SmartText tag="label" className="text-sm font-semibold text-slate-700">Movement Type:</SmartText>
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as StockMovementType | '')}
@@ -89,11 +90,11 @@ export const StockMovementsPage = () => {
           {isLoading ? (
             <div className="p-12 text-center glass rounded-3xl">
               <div className="inline-block w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
-              <p className="mt-4 text-slate-600">Loading movements...</p>
+              <SmartText tag="p" className="mt-4 text-slate-600">Loading movements...</SmartText>
             </div>
           ) : movements.length === 0 ? (
             <div className="p-12 text-center glass rounded-3xl">
-              <p className="text-slate-600">No stock movements found</p>
+              <SmartText tag="p" className="text-slate-600">No stock movements found</SmartText>
             </div>
           ) : (
             movements.map((movement, index) => (
