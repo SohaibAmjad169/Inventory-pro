@@ -173,7 +173,7 @@ export const GoodsReceiptPage = () => {
                         Supplier: <span className="font-semibold">{po.supplier?.name}</span>
                       </p>
                       <p className="text-xs text-slate-500">
-                        {po._count?.items || 0} items • ${po.total_amount.toFixed(2)}
+                        {po._count?.items || 0} items • ${Number(po.total_amount ?? 0).toFixed(2)}
                       </p>
                       {po.expected_date && (
                         <p className="text-xs text-slate-500">

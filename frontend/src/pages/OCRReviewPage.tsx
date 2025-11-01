@@ -155,7 +155,7 @@ export const OCRReviewPage = () => {
               <SmartText tag="h1" className="text-3xl font-bold gradient-text mb-2">Review Extracted Products</SmartText>
               <p className="text-slate-600 text-sm">
                 {scan.file_name} • {scan.products?.length || 0} products found • Confidence:{' '}
-                {scan.confidence_score?.toFixed(1)}%
+                {Number(scan.confidence_score ?? 0).toFixed(1)}%
               </p>
             </div>
             <div className="flex gap-3">
@@ -174,7 +174,7 @@ export const OCRReviewPage = () => {
           {[
             { label: 'Total Products', value: scan.products?.length || 0, icon: '📦', color: 'blue' },
             { label: 'Selected', value: selectedProducts.size, icon: '✅', color: 'green' },
-            { label: 'Confidence', value: `${scan.confidence_score?.toFixed(0)}%`, icon: '🎯', color: 'purple' },
+            { label: 'Confidence', value: `${Number(scan.confidence_score ?? 0).toFixed(0)}%`, icon: '🎯', color: 'purple' },
             { label: 'Processing Time', value: `${(scan.processing_time! / 1000).toFixed(1)}s`, icon: '⚡', color: 'yellow' },
           ].map((stat) => (
             <div key={stat.label} className="glass rounded-2xl p-4">

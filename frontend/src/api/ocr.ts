@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { apiClient } from './client';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://mondomty.com/api/v1';
 
@@ -112,7 +113,7 @@ export const ocrAPI = {
       formData.append('sourceReference', sourceReference);
     }
 
-    const response = await api.post<{ data: OCRScan }>('/ocr/upload', formData, {
+    const response = await apiClient.post<{ data: OCRScan }>('/ocr/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -122,7 +123,7 @@ export const ocrAPI = {
 
   // Process scan
   processScan: async (scanId: string): Promise<{ data: OCRProcessingResult }> => {
-    const response = await api.post<{ data: OCRProcessingResult }>(`/ocr/scans/${scanId}/process`);
+  const response = await apiClient.post<{ data: OCRProcessingResult }>(`/ocr/scans/${scanId}/process`);
     return response.data;
   },
 
@@ -139,13 +140,13 @@ export const ocrAPI = {
     limit: number;
     pages: number;
   }> => {
-    const response = await api.get('/ocr/scans', { params });
+  const response = await apiClient.get('/ocr/scans', { params });
     return response.data;
   },
 
   // Get scan by ID
   getScanById: async (scanId: string): Promise<{ data: OCRScan }> => {
-    const response = await api.get<{ data: OCRScan }>(`/ocr/scans/${scanId}`);
+  const response = await apiClient.get<{ data: OCRScan }>(`/ocr/scans/${scanId}`);
     return response.data;
   },
 
@@ -163,7 +164,7 @@ export const ocrAPI = {
 
   // Approve product
   approveProduct: async (productId: string): Promise<{ data: OCRProduct }> => {
-    const response = await api.post<{ data: OCRProduct }>(`/ocr/products/${productId}/approve`);
+  const response = await apiClient.post<{ data: OCRProduct }>(`/ocr/products/${productId}/approve`);
     return response.data;
   },
 
@@ -183,7 +184,7 @@ export const ocrAPI = {
 
   // Add product to inventory
   addProductToInventory: async (productId: string): Promise<{ data: any }> => {
-    const response = await api.post(`/ocr/products/${productId}/add`);
+  const response = await apiClient.post(`/ocr/products/${productId}/add`);
     return response.data;
   },
 
@@ -194,7 +195,7 @@ export const ocrAPI = {
       failed: { id: string; error: string }[];
     };
   }> => {
-    const response = await api.post('/ocr/products/bulk-add', { productIds });
+  const response = await apiClient.post('/ocr/products/bulk-add', { productIds });
     return response.data;
   },
 };
@@ -205,7 +206,7 @@ export const productImageAPI = {
     const formData = new FormData();
     formData.append('image', file);
 
-    const response = await api.post(`/products/${productId}/images`, formData, {
+  const response = await apiClient.post(`/products/${productId}/images`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
